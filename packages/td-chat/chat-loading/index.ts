@@ -7,3 +7,4 @@ export const ChatLoading = omiVueify('t-chat-loading', {
   methodNames: [],
 }) as DefineComponent<TdChatLoadingProps>;
 export default ChatLoading;
+export { default as chatLoadingProps } from './chat-loading-props';
