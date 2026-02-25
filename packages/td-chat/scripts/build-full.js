@@ -145,6 +145,26 @@ function getPlugins(format, isMin = false) {
   return plugins;
 }
 
+// 判断是否为外部依赖
+function isExternal(id) {
+  const coreExternals = ['vue', 'tdesign-vue', 'tdesign-icons-vue', 'lodash-es', 'clipboard'];
+  for (const ext of coreExternals) {
+    if (id === ext || id.startsWith(ext + '/')) {
+      return true;
+    }
+  }
+  
+  // 内部路径标记为外部
+  const internalPaths = ['@tdesign/common-js', 'tdesign-vue/es'];
+  for (const p of internalPaths) {
+    if (id.startsWith(p)) {
+      return true;
+    }
+  }
+  
+  return false;
+}
+
 async function build() {
   // 清理
   Object.values(outputDirs).forEach(dir => {
@@ -158,9 +178,7 @@ async function build() {
   console.log('Building ES modules...');
   const esBundle = await rollup({
     input: entries,
-    external: (id) => ['vue', 'tdesign-vue', 'tdesign-icons-vue', 'lodash-es', 'clipboard'].some(ext => 
-      id === ext || id.startsWith(\`\${ext}/\`)
-    ),
+    external: isExternal,
     plugins: getPlugins('es')
   });
   await esBundle.write({
@@ -168,16 +186,18 @@ async function build() {
     format: 'esm',
     entryFileNames: '[name].mjs',
     chunkFileNames: '_chunks/[name]-[hash].mjs',
-    sourcemap: true
+    sourcemap: true,
+    paths: {
+      '@tdesign/common-js': '@tdesign/common-js',
+      'tdesign-vue/es/config-provider/hooks': 'tdesign-vue/es/config-provider/hooks'
+    }
   });
 
   // CommonJS
   console.log('Building CommonJS modules...');
   const cjsBundle = await rollup({
     input: entries,
-    external: (id) => ['vue', 'tdesign-vue', 'tdesign-icons-vue', 'lodash-es', 'clipboard'].some(ext => 
-      id === ext || id.startsWith(\`\${ext}/\`)
-    ),
+    external: isExternal,
     plugins: getPlugins('cjs')
   });
   await cjsBundle.write({
@@ -186,14 +206,21 @@ async function build() {
     entryFileNames: '[name].js',
     chunkFileNames: '_chunks/[name]-[hash].js',
     sourcemap: true,
-    exports: 'named'
+    exports: 'named',
+    paths: {
+      '@tdesign/common-js': '@tdesign/common-js',
+      'tdesign-vue/es/config-provider/hooks': 'tdesign-vue/es/config-provider/hooks'
+    }
   });
 
   // UMD
   console.log('Building UMD bundles...');
   const umdBundle = await rollup({
     input: path.join(rootDir, 'index-lib.ts'),
-    external: ['vue', 'tdesign-vue'],
+    external: (id) => {
+      // UMD 只排除核心依赖
+      return ['vue', 'tdesign-vue'].includes(id) || id.startsWith('vue/') || id.startsWith('tdesign-vue/');
+    },
     plugins: getPlugins('umd')
   });
   await umdBundle.write({
@@ -207,7 +234,9 @@ async function build() {
   // UMD minified
   const umdMinBundle = await rollup({
     input: path.join(rootDir, 'index-lib.ts'),
-    external: ['vue', 'tdesign-vue'],
+    external: (id) => {
+      return ['vue', 'tdesign-vue'].includes(id) || id.startsWith('vue/') || id.startsWith('tdesign-vue/');
+    },
     plugins: getPlugins('umd', true)
   });
   await umdMinBundle.write({
