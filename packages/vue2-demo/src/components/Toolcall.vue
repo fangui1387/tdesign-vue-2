@@ -1,6 +1,11 @@
 <template>
   <t-collapse style="margin: 8px 0">
-    <t-collapse-panel :header="panelHeader" :header-right-content="() => renderStatusTag(status)">
+    <t-collapse-panel :header="panelHeader">
+      <!-- 使用 slot 自定义 header-right-content -->
+      <template #header-right-content>
+        <t-tag :theme="statusTheme" size="small">{{ statusText }}</t-tag>
+      </template>
+
       <!-- 搜索工具的特殊渲染 -->
       <div v-if="toolCallName === 'search' && searchResult">
         <div style="font-size: 13px; color: #666; margin-bottom: 8px">
@@ -32,66 +37,74 @@
   </t-collapse>
 </template>
 
-<script setup lang="tsx">
-import { computed } from 'vue';
-import { Collapse as TCollapse, CollapsePanel as TCollapsePanel, Tag } from 'tdesign-vue-next';
+<script lang="ts">
+import { defineComponent } from 'vue';
+import { Collapse as TCollapse, CollapsePanel as TCollapsePanel, Tag as TTag } from 'tdesign-vue';
 
-// 定义 props
 interface ToolCall {
   toolCallName?: string;
   args?: any;
   result?: any;
 }
 
-interface Props {
-  toolCall: ToolCall;
-  status?: 'pending' | 'streaming' | 'complete';
-}
-
-const props = withDefaults(defineProps<Props>(), {
-  status: 'complete',
-});
-
 // 状态配置
 const statusConfig = {
-  pending: { color: 'warning', text: '处理中' },
-  streaming: { color: 'processing', text: '执行中' },
-  complete: { color: 'success', text: '已完成' },
+  pending: { theme: 'warning', text: '处理中' },
+  streaming: { theme: 'primary', text: '执行中' },
+  complete: { theme: 'success', text: '已完成' },
 };
 
-// 状态渲染函数
-const renderStatusTag = (status: 'pending' | 'streaming' | 'complete') => {
-  const config = statusConfig[status] || statusConfig.complete;
+export default defineComponent({
+  name: 'Toolcall',
+  components: {
+    TCollapse,
+    TCollapsePanel,
+    TTag,
+  },
+  props: {
+    toolCall: {
+      type: Object as () => ToolCall,
+      required: true,
+    },
+    status: {
+      type: String as () => 'pending' | 'streaming' | 'complete',
+      default: 'complete',
+    },
+  },
+  computed: {
+    toolCallName(): string | undefined {
+      return this.toolCall?.toolCallName;
+    },
+    args(): any {
+      return this.toolCall?.args;
+    },
+    result(): any {
+      return this.toolCall?.result;
+    },
+    panelHeader(): string {
+      if (this.toolCallName === 'search') {
+        return '🔍 搜索工具调用';
+      }
+      return '🔧 工具调用';
+    },
+    statusTheme(): string {
+      const config = statusConfig[this.status] || statusConfig.complete;
+      return config.theme;
+    },
+    statusText(): string {
+      const config = statusConfig[this.status] || statusConfig.complete;
+      return config.text;
+    },
+    searchResult(): { title: string; references: any[] } | null {
+      if (this.toolCallName !== 'search') return null;
 
-  return (
-    <Tag theme={config.color} size="small">
-      {config.text}
-    </Tag>
-  );
-};
-
-// 使用 computed 监听 props.toolCall 的变化
-const toolCallName = computed(() => props.toolCall?.toolCallName);
-const args = computed(() => props.toolCall?.args);
-const result = computed(() => props.toolCall?.result);
-
-// 计算面板标题
-const panelHeader = computed(() => {
-  if (toolCallName.value === 'search') {
-    return '🔍 搜索工具调用';
-  }
-  return '🔧 工具调用';
-});
-
-// 解析搜索结果
-const searchResult = computed(() => {
-  if (toolCallName.value !== 'search') return null;
-
-  try {
-    return typeof result.value === 'string' ? JSON.parse(result.value) : result.value;
-  } catch (e) {
-    return { title: '解析错误', references: [] };
-  }
+      try {
+        return typeof this.result === 'string' ? JSON.parse(this.result) : this.result;
+      } catch (e) {
+        return { title: '解析错误', references: [] };
+      }
+    },
+  },
 });
 </script>
 
