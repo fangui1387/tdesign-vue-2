@@ -1,0 +1,43 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "lib": ["esnext", "dom", "dom.iterable", "scripthost"],
+    "jsx": "preserve",
+    "module": "esnext",
+    "rootDir": "../../../",
+    "moduleResolution": "bundler",
+    "baseUrl": "../../../",
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "declaration": true,
+    "outDir": "../../../packages/td-chat/td-chat-types",
+    "removeComments": true,
+    "isolatedModules": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "strict": false,
+    "noImplicitAny": false,
+    "paths": {
+      "@tdesign/common-js/*": ["packages/common/*"],
+      "@common/*": ["packages/common/*"],
+      "tdesign-vue": ["packages/tdesign-vue-next/src"],
+      "tdesign-vue/es/*": ["packages/tdesign-vue-next/src/*"]
+    }
+  },
+  "include": [
+    "../../../packages/td-chat/**/*.ts",
+    "../../../packages/td-chat/**/*.tsx",
+    "../../../packages/common/**/*.ts",
+    "../../../packages/tdesign-vue-next/src/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "lib",
+    "cjs",
+    "esm",
+    "es",
+    "**/*.d.ts"
+  ]
+}

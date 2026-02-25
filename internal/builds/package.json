@@ -5,15 +5,22 @@
   "license": "MIT",
   "scripts": {
     "build:vue-next": "cross-env NODE_ENV=production tsx ./vue-next/index.ts",
-    "build:chat": "cross-env NODE_ENV=production tsx ./vue-next-chat/index.ts"
+    "build:chat": "cross-env NODE_ENV=production tsx ./vue-next-chat/index.ts",
+    "build:td-chat": "cd ../../packages/td-chat && pnpm install && pnpm build"
   },
   "devDependencies": {
+    "@babel/core": "^7.23.0",
+    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.18.6",
+    "@babel/plugin-proposal-optional-chaining": "^7.21.0",
+    "@babel/plugin-transform-runtime": "^7.23.0",
+    "@babel/preset-env": "^7.23.0",
     "@rollup/plugin-babel": "catalog:bundle",
     "@rollup/plugin-commonjs": "catalog:bundle",
     "@rollup/plugin-json": "catalog:bundle",
     "@rollup/plugin-node-resolve": "catalog:bundle",
     "@rollup/plugin-replace": "catalog:bundle",
     "@rollup/plugin-url": "catalog:bundle",
+    "@vue/babel-preset-jsx": "^1.4.0",
     "cross-env": "catalog:bundle",
     "esbuild": "catalog:bundle",
     "fs-extra": "catalog:bundle",
@@ -28,7 +35,7 @@
     "rollup-plugin-static-import": "catalog:bundle",
     "rollup-plugin-styles": "catalog:bundle",
     "rollup-plugin-terser": "catalog:bundle",
-    "rollup-plugin-vue": "catalog:bundle",
+    "rollup-plugin-vue": "^5.0.0",
     "tsx": "catalog:bundle"
   }
 }

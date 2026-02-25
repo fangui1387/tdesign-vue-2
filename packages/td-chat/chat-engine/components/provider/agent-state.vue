@@ -1,23 +1,36 @@
 <template>
-  <slot></slot>
+  <div>
+    <slot></slot>
+  </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts">
+import { defineComponent, provide } from 'vue';
 import { provideAgentState, useAgentState, type UseStateActionReturn } from '../../hooks/useAgentState';
 
-const props = defineProps<{
-  initialState?: Record<string, any>;
-  subscribeKey?: string;
-}>();
+export default defineComponent({
+  name: 'AgentStateProvider',
+  props: {
+    initialState: {
+      type: Object,
+      default: () => ({}),
+    },
+    subscribeKey: {
+      type: String,
+      default: undefined,
+    },
+  },
+  setup(props) {
+    const state = useAgentState({
+      initialState: props.initialState,
+      subscribeKey: props.subscribeKey,
+    });
 
-const state = useAgentState({
-  initialState: props.initialState,
-  subscribeKey: props.subscribeKey,
-});
+    provideAgentState(state);
 
-provideAgentState(state);
-
-defineExpose({
-  state,
+    return {
+      state,
+    };
+  },
 });
 </script>

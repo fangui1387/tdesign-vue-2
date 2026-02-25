@@ -1,0 +1,42 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "lib": ["esnext", "dom", "dom.iterable", "scripthost"],
+    "jsx": "preserve",
+    "module": "esnext",
+    "rootDir": "../../",
+    "moduleResolution": "bundler",
+    "baseUrl": "../../",
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "declaration": true,
+    "outDir": "./es",
+    "removeComments": true,
+    "isolatedModules": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "strict": false,
+    "noImplicitAny": false,
+    "noImplicitThis": false,
+    "strictNullChecks": false,
+    "paths": {
+      "@tdesign/common-js/*": ["packages/common/*"],
+      "@common/*": ["packages/common/*"],
+      "tdesign-vue": ["packages/components/src"],
+      "tdesign-vue/es/*": ["packages/components/src/*"]
+    }
+  },
+  "include": [
+    "./**/*.ts",
+    "./**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "lib",
+    "esm",
+    "es",
+    "**/*.d.ts"
+  ]
+}

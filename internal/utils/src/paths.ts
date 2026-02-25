@@ -71,6 +71,11 @@ export const getTdesignVueNextChatRoot = () => {
   return joinPosix(getPackagesRoot(), 'tdesign-vue-next-chat');
 };
 
+// packages/td-chat
+export const getTdChatRoot = () => {
+  return joinPosix(getPackagesRoot(), 'td-chat');
+};
+
 // joinPosix
 export const joinWorkspaceRoot = (...paths: string[]) => {
   return joinPosix(getWorkspaceRoot(), ...paths);
@@ -102,6 +107,10 @@ export const joinTdesignVueNextRoot = (...paths: string[]) => {
 
 export const joinTdesignVueNextChatRoot = (...paths: string[]) => {
   return joinPosix(getTdesignVueNextChatRoot(), ...paths);
+};
+
+export const joinTdChatRoot = (...paths: string[]) => {
+  return joinPosix(getTdChatRoot(), ...paths);
 };
 
 /**

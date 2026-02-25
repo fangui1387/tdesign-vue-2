@@ -1,0 +1,9 @@
+{
+  "name": "@tdesign/td-chat-build",
+  "private": true,
+  "author": "tdesign",
+  "license": "MIT",
+  "scripts": {
+    "build": "node build.js"
+  }
+}

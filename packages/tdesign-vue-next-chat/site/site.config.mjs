@@ -150,22 +150,6 @@ export const docs = [
     type: 'doc',
     children: [
       {
-        title: '自定义主题',
-        titleEn: 'Theme Customization',
-        name: 'custom-theme',
-        path: '/chat/custom-theme',
-        component: () => import('@tdesign/common/docs/web/theme.md'),
-        componentEn: () => import('@tdesign/common/docs/web/theme.en-US.md'),
-      },
-      {
-        title: '深色模式',
-        titleEn: 'Dark Mode',
-        name: 'dark-mode',
-        path: '/chat/dark-mode',
-        component: () => import('@tdesign/common/docs/dark-mode.md'),
-        componentEn: () => import('@tdesign/common/docs/dark-mode.en-US.md'),
-      },
-      {
         title: '自定义样式',
         titleEn: 'Style Customization',
         name: 'custom-style',
