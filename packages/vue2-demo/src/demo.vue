@@ -9,19 +9,23 @@
         :content="message.content"
         allow-content-segment-custom
       >
-        <template v-for="(item, index) in message.content" :key="index">
-          <template v-if="item.type === 'reasoning'">
-            <template v-for="(subItem, subIndex) in item.data" :key="`toolcall-${index}-${subIndex}`">
-              <div :slot="`reasoning-toolcall-${subIndex}`" class="toolcall-wrapper">
-                <CustomToolCallRenderer
-                  v-if="subItem.type === 'toolcall'"
-                  :tool-call="subItem.data"
-                  :status="subItem.status"
-                />
-              </div>
-            </template>
-          </template>
-        </template>
+        <!-- Vue 2: 不能在 template 上使用 key，使用 div 包裹 -->
+        <div v-for="(item, index) in message.content" :key="index">
+          <div v-if="item.type === 'reasoning'">
+            <div
+              v-for="(subItem, subIndex) in item.data"
+              :key="`toolcall-${index}-${subIndex}`"
+              :slot="`reasoning-toolcall-${subIndex}`"
+              class="toolcall-wrapper"
+            >
+              <CustomToolCallRenderer
+                v-if="subItem.type === 'toolcall'"
+                :tool-call="subItem.data"
+                :status="subItem.status"
+              />
+            </div>
+          </div>
+        </div>
 
         <template #actionbar>
           <t-chat-actionbar
