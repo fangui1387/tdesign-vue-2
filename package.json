@@ -80,8 +80,7 @@
   },
   "lint-staged": {
     "*.{vue,js,jsx,ts,tsx}": [
-      "prettier --write --cache",
-      "eslint --fix --cache"
+      "prettier --write --cache"
     ]
   }
 }
