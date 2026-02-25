@@ -1,10 +1,10 @@
-# tdesign-vue3-demo
+# tdesign-vue2-demo
 
-这是一个基于 Vue 3 的 TDesign 示例工程，可以直接运行。它展示了在 Vue 3 + Vite 环境中 TDesign 组件的基本使用方法。
+这是一个基于 Vue 2.7.16 的 TDesign 示例工程，可以直接运行。它展示了在 Vue 2.7 + Vite 环境中 TDesign 组件的基本使用方法。
 
 ## 推荐的 IDE 配置
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar)（并禁用 Vetur）。
+[VS Code](https://code.visualstudio.com/) + [Vetur](https://marketplace.visualstudio.com/items?itemName=octref.vetur)（Vue 2 推荐使用 Vetur）。
 
 ## 推荐的浏览器配置
 
@@ -17,7 +17,7 @@
 
 ## 关于 TDesign
 
-[TDesign](https://tdesign.tencent.com/) 是腾讯开发的一套全面的设计系统，为 Web 应用提供高质量的 UI 组件。本项目使用 `tdesign-vue-next`，即 TDesign 的 Vue 3 实现。
+[TDesign](https://tdesign.tencent.com/) 是腾讯开发的一套全面的设计系统，为 Web 应用提供高质量的 UI 组件。本项目使用 `tdesign-vue`，即 TDesign 的 Vue 2 实现。
 
 ### 主要特性
 - **丰富的组件库**：包含按钮、表单、模态框、表格等多种组件
@@ -27,12 +27,12 @@
 
 ## TypeScript 对 `.vue` 导入的类型支持
 
-TypeScript 默认无法处理 `.vue` 导入的类型信息，因此我们使用 `vue-tsc` 替代 `tsc` CLI 进行类型检查。在编辑器中，我们需要 [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) 来让 TypeScript 语言服务识别 `.vue` 类型。
+TypeScript 默认无法处理 `.vue` 导入的类型信息。Vue 2.7 支持 Composition API，在编辑器中推荐使用 [Vetur](https://marketplace.visualstudio.com/items?itemName=octref.vetur) 来获得更好的 TypeScript 和 Vue 组件支持。
 
 ## 项目结构
 
 ```
-tdesign-vue3-demo/
+tdesign-vue2-demo/
 ├── src/                 # 源代码
 │   ├── assets/          # 静态资源
 │   ├── components/      # Vue 组件

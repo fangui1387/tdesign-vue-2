@@ -8,7 +8,7 @@ export default defineConfig({
     alias: {
       '@': '/src',
       '@tdesign/common-js': path.resolve(__dirname, '../components/src'),
-      '@tdesign/common-style': path.resolve(__dirname, '../common/style'),
+      '@tdesign/common-style': path.resolve(__dirname, './node_modules/tdesign-vue/esm/_common/style'),
       'tdesign-vue/es/config-provider/hooks': path.resolve(__dirname, '../components/src/config-provider/hooks'),
     },
   },

@@ -6,7 +6,7 @@
   "scripts": {
     "build:vue-next": "cross-env NODE_ENV=production tsx ./vue-next/index.ts",
     "build:chat": "cross-env NODE_ENV=production tsx ./vue-next-chat/index.ts",
-    "build:td-chat": "cd ../../packages/td-chat && pnpm install && pnpm build"
+    "build:td-chat": "cd ../../packages/td-chat && pnpm build"
   },
   "devDependencies": {
     "@babel/core": "^7.23.0",
