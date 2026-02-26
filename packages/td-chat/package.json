@@ -1,5 +1,5 @@
 {
-  "name": "@tdesign/td-chat",
+  "name": "@jump-mp/td-chat",
   "version": "0.1.0",
   "description": "TDesign Chat Components for Vue 2.7",
   "main": "lib/index.js",
@@ -10,7 +10,10 @@
     "lib",
     "dist"
   ],
-  "author": "tdesign",
+  "publishConfig": {
+    "access": "public"
+  },
+  "author": "jump-mp",
   "license": "MIT",
   "dependencies": {
     "clipboard": "^2.0.11",
