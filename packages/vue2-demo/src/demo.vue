@@ -70,7 +70,7 @@ import {
   getMessageContentForCopy,
   AGUIAdapter,
   useChat,
-} from '@tdesign/td-chat';
+} from '@jump-mp/td-chat';
 import { MessagePlugin } from 'tdesign-vue';
 import CustomToolCallRenderer from './components/Toolcall.vue';
 

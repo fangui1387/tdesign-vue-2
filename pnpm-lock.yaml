@@ -1070,9 +1070,9 @@ importers:
 
   packages/vue2-demo:
     dependencies:
-      '@tdesign/td-chat':
-        specifier: file:../td-chat
-        version: file:packages/td-chat(tdesign-vue@1.10.9(vue@2.7.16))(vue@2.7.16)
+      '@jump-mp/td-chat':
+        specifier: ^0.1.0
+        version: 0.1.2(tdesign-vue@1.10.9(vue@2.7.16))(vue@2.7.16)
       clipboard:
         specifier: ^2.0.11
         version: 2.0.11
@@ -2050,6 +2050,12 @@ packages:
   '@jridgewell/trace-mapping@0.3.9':
     resolution: {integrity: sha512-3Belt6tdc8bPgAtbcmdtNJlirVoTmEb5e2gC94PnkwEW9jI6CAHUeoG85tjWP5WquqfavoMtMwiG4P926ZKKuQ==}
 
+  '@jump-mp/td-chat@0.1.2':
+    resolution: {integrity: sha512-3m8jR+WV0ay056136aqN8MtsXTcRmb3XdslJtt28DBIsFzlOI/5piE8sewXRYtxfQmzqSSRzNcktJkuf1F5qcw==}
+    peerDependencies:
+      tdesign-vue: ^1.0.0
+      vue: ^2.7.16
+
   '@material/material-color-utilities@0.1.2':
     resolution: {integrity: sha512-uKkkx7Xo1AZJR0eMjH902rAb0vEjDbb3tgXt0cC3SHbpDGkPNhkuDKtxnw147axOM6uKuI7vywHRQlDrjDGhCA==}
 
@@ -2511,12 +2517,6 @@ packages:
 
   '@tdesign/site-components@0.18.0-alpha.8':
     resolution: {integrity: sha512-upjXxb1oAP47FI5OQyHgFSp/TD5nUSIJEw/QnMIG0cJXeiE2YryocLYrQ8ASzJIrFHFofU46/W0/FjSvYASYHA==}
-
-  '@tdesign/td-chat@file:packages/td-chat':
-    resolution: {directory: packages/td-chat, type: directory}
-    peerDependencies:
-      tdesign-vue: ^1.0.0
-      vue: ^2.7.16
 
   '@tdesign/theme-generator@1.2.1':
     resolution: {integrity: sha512-e+1IrBcnB8CYRkBqRV1yIi1RN1Bcsw3hud64aeLkIGRWxj3jI9E7OkFxdoiadiEBH6C+zBKQ/Ab+n0900nAM4Q==}
@@ -9255,6 +9255,14 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
 
+  '@jump-mp/td-chat@0.1.2(tdesign-vue@1.10.9(vue@2.7.16))(vue@2.7.16)':
+    dependencies:
+      clipboard: 2.0.11
+      lodash-es: 4.17.21
+      tdesign-icons-vue: 0.3.6(vue@2.7.16)
+      tdesign-vue: 1.10.9(vue@2.7.16)
+      vue: 2.7.16
+
   '@material/material-color-utilities@0.1.2': {}
 
   '@mswjs/cookies@0.2.2':
@@ -9645,14 +9653,6 @@ snapshots:
       prismjs: 1.30.0
       qrcode: 1.5.4
       tdesign-icons-svg: 0.0.1
-
-  '@tdesign/td-chat@file:packages/td-chat(tdesign-vue@1.10.9(vue@2.7.16))(vue@2.7.16)':
-    dependencies:
-      clipboard: 2.0.11
-      lodash-es: 4.17.21
-      tdesign-icons-vue: 0.3.6(vue@2.7.16)
-      tdesign-vue: 1.10.9(vue@2.7.16)
-      vue: 2.7.16
 
   '@tdesign/theme-generator@1.2.1':
     dependencies:

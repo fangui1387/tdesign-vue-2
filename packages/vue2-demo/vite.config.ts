@@ -38,7 +38,6 @@ export default defineConfig({
     },
   },
   optimizeDeps: {
-    exclude: ["@tdesign/td-chat"],
     include: ["tdesign-vue", "vue"],
   },
   build: {
