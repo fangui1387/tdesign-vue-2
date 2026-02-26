@@ -2,17 +2,14 @@ import { defineComponent, computed, provide, ref, onMounted, onUnmounted } from 
 import { ClearIcon, ArrowDownIcon } from 'tdesign-icons-vue';
 import { useConfig } from 'tdesign-vue/es/config-provider/hooks';
 import { isArray, throttle, debounce } from 'lodash-es';
-
-import props from './props';
 import { Divider, Popconfirm, Button } from 'tdesign-vue';
 import { usePrefixClass, useTNodeJSX } from '@tdesign/shared-hooks';
-import ChatMessage from '../chat-message';
+import { ChatMessage } from '../chat-message';
 import { TdChatItemMeta, ScrollToBottomParams } from '../type';
 
 const handleScrollToBottom = (target: HTMLDivElement, behavior?: 'auto' | 'smooth') => {
   const currentScrollHeight = target.scrollHeight;
   const currentClientHeight = target.clientHeight;
-
   const innerBehavior = behavior ?? 'auto';
   if (innerBehavior === 'auto') {
     target.scrollTop = currentScrollHeight - currentClientHeight;
@@ -33,7 +30,6 @@ const handleScrollToBottom = (target: HTMLDivElement, behavior?: 'auto' | 'smoot
         requestAnimationFrame(animateScroll);
       }
     };
-
     requestAnimationFrame(animateScroll);
   }
 };
@@ -164,18 +160,23 @@ export default defineComponent({
 
     const handleAutoScroll = throttle(() => {
       const { autoScroll, defaultScrollTo, reverse } = props;
+      // 如果未启用自动滚动、自动滚动未激活或反向滚动，则直接返回
       if (!autoScroll || !isAutoScrollEnabled.value || reverse) {
         return;
       }
 
+      // 如果列表引用不存在，则直接返回
       if (!listRef.value) return;
 
+      // 根据默认滚动位置执行滚动
       if (defaultScrollTo === 'top') {
+        // 滚动到顶部
         listRef.value.scrollTo({
           top: 0,
           behavior: 'auto',
         });
       } else {
+        // 滚动到底部
         scrollToBottom({
           behavior: 'auto',
         });
@@ -186,7 +187,6 @@ export default defineComponent({
       if (!listRef.value || props.reverse) return;
       const { scrollTop, scrollHeight, clientHeight } = listRef.value;
       const { defaultScrollTo } = props;
-
       const scrollDiff = scrollTopTmp.value - scrollTop;
       const upScroll = scrollHeight === scrollHeightTmp.value && scrollDiff >= 10 ? true : false;
       if (upScroll) {
@@ -195,7 +195,6 @@ export default defineComponent({
       } else {
         const threshold = 50;
         let isNearTarget = false;
-
         if (defaultScrollTo === 'top') {
           isNearTarget = scrollTop <= threshold;
         } else {
@@ -225,10 +224,8 @@ export default defineComponent({
     onMounted(() => {
       const { defaultScrollTo } = props;
       defaultScrollTo === 'bottom' && !props.reverse && (isAutoScrollEnabled.value = true);
-
       const list = listRef.value;
       const inner = innerRef.value;
-
       checkAndShowScrollButton();
       if (list) {
         observer.value = new ResizeObserver(() => {
@@ -273,7 +270,6 @@ export default defineComponent({
         )}
       </div>
     );
-
     return renderContent;
   },
 });

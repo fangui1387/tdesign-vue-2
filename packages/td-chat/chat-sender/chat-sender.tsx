@@ -17,7 +17,7 @@ export default defineComponent({
       default: () => ({ items: [], overflow: 'scrollX' }),
     },
   },
-  emits: ['send', 'stop', 'blur', 'focus', 'fileSelect', 'remove', 'fileClick'],
+  emits: ['send', 'stop', 'update:modelValue', 'blur', 'focus', 'fileSelect', 'remove', 'fileClick'],
   setup(props, { emit }) {
     const isComposition = false;
     const senderTextarea = ref(null);
