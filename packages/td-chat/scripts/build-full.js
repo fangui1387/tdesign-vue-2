@@ -271,12 +271,20 @@ async function build() {
     fs.writeFileSync(path.join(buildTempDir, 'babel.config.js'), babelConfig);
     fs.writeFileSync(path.join(buildTempDir, 'build.js'), rollupScript);
 
-    // 3. 安装依赖
-    console.log('\n📥 Installing dependencies...');
-    execSync('npm install', {
-      cwd: buildTempDir,
-      stdio: 'inherit',
-    });
+    // 3. 检查并安装依赖
+    console.log('\n📥 Checking dependencies...');
+    const nodeModulesPath = path.join(buildTempDir, 'node_modules');
+    const packageJsonPath = path.join(buildTempDir, 'package.json');
+
+    if (!fs.existsSync(nodeModulesPath)) {
+      console.log('  Installing dependencies...');
+      execSync('npm install', {
+        cwd: buildTempDir,
+        stdio: 'inherit',
+      });
+    } else {
+      console.log('  ✓ Dependencies already installed, skipping...');
+    }
 
     // 4. 运行构建（增加内存限制）
     console.log('\n🔨 Building...');
