@@ -1,4 +1,4 @@
-import { defineComponent, ref, computed, toRefs, reactive, Fragment } from 'vue';
+import { defineComponent, ref, computed, toRefs, reactive } from 'vue';
 import { SendFilledIcon, FileAttachmentIcon, ImageIcon } from 'tdesign-icons-vue';
 import { Button, Textarea, Tooltip } from 'tdesign-vue';
 import Attachments from '../attachments';
@@ -101,7 +101,7 @@ export default defineComponent({
       const { uploadAttachmentText, uploadImageText } = globalConfig.value;
       const uploadAttachment = actions.find((item) => item.name === 'uploadAttachment');
       const uploadAttachmentButton = uploadAttachment ? (
-        <Fragment>
+        <div>
           <input
             {...uploadAttachment.uploadProps}
             ref={uploadFileRef}
@@ -128,12 +128,12 @@ export default defineComponent({
               <FileAttachmentIcon size="20px" />
             </Button>
           </Tooltip>
-        </Fragment>
+        </div>
       ) : null;
 
       const uploadImage = actions.find((item) => item.name === 'uploadImage');
       const renderUploadImageButton = uploadImage ? (
-        <Fragment>
+        <div>
           <input
             {...uploadImage.uploadProps}
             ref={uploadImageRef}
@@ -160,7 +160,7 @@ export default defineComponent({
               <ImageIcon size="20px" />
             </Button>
           </Tooltip>
-        </Fragment>
+        </div>
       ) : null;
       const buttonComponents = {
         uploadAttachment: uploadAttachmentButton,
@@ -168,7 +168,7 @@ export default defineComponent({
       };
 
       return (
-        <Fragment>
+        <div>
           {actions.length > 0 &&
             actions
               .filter(
@@ -195,7 +195,7 @@ export default defineComponent({
               <div class={`${COMPONENT_NAME.value}-sender__button__stopicon`} />
             </Button>
           )}
-        </Fragment>
+        </div>
       );
     };
 

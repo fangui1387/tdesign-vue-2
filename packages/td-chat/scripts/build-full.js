@@ -147,9 +147,17 @@ function getPlugins(format, isMin = false) {
 
 // 判断是否为外部依赖
 function isExternal(id) {
-  const coreExternals = ['vue', 'tdesign-vue', 'tdesign-icons-vue', 'lodash-es', 'clipboard'];
+  const coreExternals = ['vue', 'tdesign-vue', 'tdesign-icons-vue', 'lodash-es', 'clipboard', 'tdesign-web-components'];
   for (const ext of coreExternals) {
     if (id === ext || id.startsWith(ext + '/')) {
+      return true;
+    }
+  }
+  
+  // 将 @tdesign 包的样式和工具模块标记为外部依赖
+  const tdesignExternals = ['@tdesign/common-js', '@tdesign/common-style'];
+  for (const ext of tdesignExternals) {
+    if (id.startsWith(ext)) {
       return true;
     }
   }

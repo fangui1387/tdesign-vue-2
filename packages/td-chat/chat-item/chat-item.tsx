@@ -1,4 +1,4 @@
-import { defineComponent, computed, provide, Fragment } from 'vue';
+import { defineComponent, computed, provide } from 'vue';
 import { useConfig, usePrefixClass, useTNodeJSX } from '../utils/hooks';
 
 import props from './chat-item-props';
@@ -73,53 +73,51 @@ export default defineComponent({
           </div>
         );
       };
-      const contentDom = (
-        <Fragment>
-          {role.value !== 'model-change' && avatarDom}
-          <div class={contentClasses.value}>
-            {role.value !== 'model-change' && nameDatetimeDom}
-            {textLoading &&
-              (props.animation === 'skeleton' ? (
-                <Skeleton loading={textLoading} animation={'gradient'}></Skeleton>
-              ) : (
-                <ChatLoading animation={props.animation}></ChatLoading>
-              ))}
-            {!textLoading && (
-              <div class={`${COMPONENT_NAME.value}__detail`}>
-                {isObject(props.reasoning) && role.value === 'assistant' && (
-                  <ChatReasoning
-                    expandIconPlacement={(props.reasoning as Record<string, any>).expandIconPlacement}
-                    onExpandChange={(props.reasoning as Record<string, any>).onExpandChange}
-                    collapse-panel-props={{
-                      ...(props.reasoning as Record<string, any>).collapsePanelProps,
-                    }}
-                  ></ChatReasoning>
-                )}
-                {isString(props.reasoning) && role.value === 'assistant' && (
-                  <ChatReasoning
-                    expandIconPlacement={'right'}
-                    collapse-panel-props={{
-                      header: renderHeader(),
-                      content: (
-                        <Text
-                          content={{ type: 'text', data: props.reasoning as unknown as string }}
-                          role={role.value}
-                        />
-                      ),
-                    }}
-                  ></ChatReasoning>
-                )}
-                {isString(content) ? <Text content={content} role={role.value} status={props.status} /> : content}
-              </div>
-            )}
-            {role.value === 'assistant' && showActions.value && (
-              <div class={`${COMPONENT_NAME.value}__actions-margin`}>
-                {renderTNodeJSX('actionbar') || renderTNodeJSX('actions')}
-              </div>
-            )}
-          </div>
-        </Fragment>
-      );
+      const contentDom = [
+        role.value !== 'model-change' && avatarDom,
+        <div class={contentClasses.value}>
+          {role.value !== 'model-change' && nameDatetimeDom}
+          {textLoading &&
+            (props.animation === 'skeleton' ? (
+              <Skeleton loading={textLoading} animation={'gradient'}></Skeleton>
+            ) : (
+              <ChatLoading animation={props.animation}></ChatLoading>
+            ))}
+          {!textLoading && (
+            <div class={`${COMPONENT_NAME.value}__detail`}>
+              {isObject(props.reasoning) && role.value === 'assistant' && (
+                <ChatReasoning
+                  expandIconPlacement={(props.reasoning as Record<string, any>).expandIconPlacement}
+                  onExpandChange={(props.reasoning as Record<string, any>).onExpandChange}
+                  collapse-panel-props={{
+                    ...(props.reasoning as Record<string, any>).collapsePanelProps,
+                  }}
+                ></ChatReasoning>
+              )}
+              {isString(props.reasoning) && role.value === 'assistant' && (
+                <ChatReasoning
+                  expandIconPlacement={'right'}
+                  collapse-panel-props={{
+                    header: renderHeader(),
+                    content: (
+                      <Text
+                        content={{ type: 'text', data: props.reasoning as unknown as string }}
+                        role={role.value}
+                      />
+                    ),
+                  }}
+                ></ChatReasoning>
+              )}
+              {isString(content) ? <Text content={content} role={role.value} status={props.status} /> : content}
+            </div>
+          )}
+          {role.value === 'assistant' && showActions.value && (
+            <div class={`${COMPONENT_NAME.value}__actions-margin`}>
+              {renderTNodeJSX('actionbar') || renderTNodeJSX('actions')}
+            </div>
+          )}
+        </div>,
+      ];
       return (
         <div
           class={`${COMPONENT_NAME.value}__inner ${roleValue} ${COMPONENT_NAME.value}__text--variant--${variant.value}`}
