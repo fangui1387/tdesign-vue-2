@@ -132,9 +132,9 @@ export interface TdChatItemProps {
   actionbar?: string | TNode;
   /**
    * 动画效果，支持「渐变加载动画」,「闪烁加载动画」, 「骨架屏」三种
-   * @default skeleton
+   * @default circle
    */
-  animation?: 'skeleton' | 'moving' | 'gradient';
+  animation?: 'skeleton' | 'moving' | 'gradient' | 'circle';
   /**
    * 自定义的头像配置
    */
@@ -170,7 +170,19 @@ export interface TdChatItemProps {
    * @default text
    */
   variant?: 'base' | 'outline' | 'text';
-  status?: '' | 'error';
+  /**
+   * 消息对象
+   */
+  message?: any;
+  /**
+   * 聊天内容属性
+   */
+  chatContentProps?: any;
+  /**
+   * 状态
+   * @default complete
+   */
+  status?: 'pending' | 'complete' | 'stop' | 'error';
 }
 
 type ChatContentType = 'text' | 'markdown';
@@ -269,6 +281,10 @@ export interface TdChatInputProps {
    */
   disabled?: boolean;
   /**
+   * 绑定输入框的值
+   */
+  modelValue?: string | number;
+  /**
    * 输入框默认文案
    * @default ''
    */
@@ -286,32 +302,32 @@ export interface TdChatInputProps {
    * 输入框的值
    * @default ''
    */
-  value?: string;
+  value?: string | number;
   /**
    * 输入框的值，非受控属性
    * @default ''
    */
-  defaultValue?: string;
+  defaultValue?: string | number;
   /**
    * 输入框聚焦时触发
    */
-  onBlur?: (value: string, context: { e: FocusEvent }) => void;
+  onBlur?: (value: string | number, context: { e: FocusEvent }) => void;
   /**
    * 输入框值发生变化时触发
    */
-  onChange?: (value: string, context: { e: InputEvent | MouseEvent | KeyboardEvent }) => void;
+  onChange?: (value: string | number, context: { e: InputEvent | MouseEvent | KeyboardEvent }) => void;
   /**
    * 输入框聚焦时触发
    */
-  onFocus?: (value: string, context: { e: FocusEvent }) => void;
+  onFocus?: (value: string | number, context: { e: FocusEvent }) => void;
   /**
    * 点击消息发送的回调方法
    */
-  onSend?: (value: string, context: { e: MouseEvent | KeyboardEvent }) => void;
+  onSend?: (value: string | number, context: { e: MouseEvent | KeyboardEvent }) => void;
   /**
    * 点击消息终止的回调方法
    */
-  onStop?: (value: string, context: { e: MouseEvent }) => void;
+  onStop?: (value: string | number, context: { e: MouseEvent }) => void;
 }
 
 export interface TdChatSenderProps {
@@ -348,35 +364,39 @@ export interface TdChatSenderProps {
    */
   textareaProps?: TextareaProps;
   /**
+   * 绑定输入框的值
+   */
+  modelValue?: string | number;
+  /**
    * 输入框的值
    * @default ''
    */
-  value?: string;
+  value?: string | number;
   /**
    * 输入框的值，非受控属性
    * @default ''
    */
-  defaultValue?: string;
+  defaultValue?: string | number;
   /**
    * 输入框聚焦时触发
    */
-  onBlur?: (value: string, context: { e: FocusEvent }) => void;
+  onBlur?: (value: string | number, context: { e: FocusEvent }) => void;
   /**
    * 输入框值发生变化时触发
    */
-  onChange?: (value: string, context: { e: InputEvent | MouseEvent | KeyboardEvent }) => void;
+  onChange?: (value: string | number, context: { e: InputEvent | MouseEvent | KeyboardEvent }) => void;
   /**
    * 输入框聚焦时触发
    */
-  onFocus?: (value: string, context: { e: FocusEvent }) => void;
+  onFocus?: (value: string | number, context: { e: FocusEvent }) => void;
   /**
    * 点击消息发送的回调方法
    */
-  onSend?: (value: string, context: { e: MouseEvent | KeyboardEvent }) => void;
+  onSend?: (value: string | number, context: { e: MouseEvent | KeyboardEvent }) => void;
   /**
    * 点击消息终止的回调方法
    */
-  onStop?: (value: string, context: { e: MouseEvent }) => void;
+  onStop?: (value: string | number, context: { e: MouseEvent }) => void;
   /**
    * 附件配置属性
    */
@@ -415,8 +435,18 @@ export interface TdChatReasoningProps {
 
   /**
    * 是否折叠
+   * @default false
    */
   collapsed?: boolean;
+  /**
+   * 绑定折叠的状态
+   */
+  modelValue?: boolean;
+  /**
+   * 非受控折叠状态
+   * @default false
+   */
+  defaultCollapsed?: boolean;
   /**
    * 布局方式
    */
@@ -425,6 +455,37 @@ export interface TdChatReasoningProps {
    * 加载过程动画
    */
   animation?: 'moving' | 'gradient' | 'circle';
+}
+
+export interface TdChatThinkingProps {
+  /**
+   * 思考内容
+   */
+  content?: string | TNode;
+  /**
+   * 布局方式
+   * @default block
+   */
+  layout?: 'block' | 'border';
+  /**
+   * 最大高度
+   */
+  maxHeight?: string | number;
+  /**
+   * 动画效果
+   * @default dots
+   */
+  animation?: 'dots' | 'moving' | 'gradient';
+  /**
+   * 是否折叠
+   * @default false
+   */
+  collapsed?: boolean;
+  /**
+   * 状态
+   * @default pending
+   */
+  status?: 'pending' | 'complete' | 'stop' | 'error';
 }
 
 export interface TdChatItemMeta {

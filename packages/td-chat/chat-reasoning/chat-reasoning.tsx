@@ -1,5 +1,5 @@
 import { defineComponent, computed, provide, inject, ComputedRef, toRefs } from 'vue';
-import { usePrefixClass, useTNodeJSX, useVModel } from '@tdesign/shared-hooks';
+import { usePrefixClass, useTNodeJSX, useVModel } from '../utils/hooks';
 import props from './chat-reasoning-props';
 import { Collapse, CollapsePanel } from 'tdesign-vue';
 

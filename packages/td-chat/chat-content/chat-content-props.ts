@@ -16,11 +16,15 @@ export default {
   role: {
     type: String as PropType<TdChatContentProps['role']>,
     default: '',
+    validator(val: string): boolean {
+      if (!val) return true;
+      return ['', 'user', 'assistant', 'error', 'model-change', 'system'].includes(val);
+    },
   },
   /** Markdown引擎类型，用于解析Markdown内容 */
   markdownProps: {
     type: Object as PropType<TdChatContentProps['markdownProps']>,
-    default: () => ({ engine: 'marked', options: {} }),
+    default: () => ({ engine: 'cherry-markdown', options: {} }),
   },
   status: {
     type: String as PropType<TdChatContentProps['status']>,

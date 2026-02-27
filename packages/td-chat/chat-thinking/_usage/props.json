@@ -46,7 +46,7 @@
   {
     "name": "animation",
     "type": "enum",
-    "defaultValue": "moving",
+    "defaultValue": "dots",
     "options": [
       {
         "label": "dots",
@@ -55,6 +55,10 @@
       {
         "label": "moving",
         "value": "moving"
+      },
+      {
+        "label": "gradient",
+        "value": "gradient"
       }
     ]
   }

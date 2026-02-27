@@ -1,6 +1,5 @@
 import { defineComponent, computed, inject, onMounted, ComputedRef } from 'vue';
-import { useConfig } from 'tdesign-vue/es/config-provider/hooks';
-import { usePrefixClass } from '@tdesign/shared-hooks';
+import { useConfig, usePrefixClass } from '../utils/hooks';
 import { Marked } from 'marked';
 import { markedHighlight } from 'marked-highlight';
 import hljs from 'highlight.js';

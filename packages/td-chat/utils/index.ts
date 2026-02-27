@@ -1,5 +1,7 @@
 import { MessagePlugin } from 'tdesign-vue';
 
+export * from './hooks';
+
 export class MessagePluginSingleton {
   private static instance: MessagePluginSingleton;
   private messagePlugin: any;

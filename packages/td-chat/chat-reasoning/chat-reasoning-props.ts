@@ -13,7 +13,7 @@ export default {
   },
   /** 当前折叠面板展开图标。优先级低于collapsePanelProps.expandIcon */
   expandIcon: {
-    type: [String, Function] as PropType<TdChatReasoningProps['expandIcon']>,
+    type: Function as PropType<TdChatReasoningProps['expandIcon']>,
   },
   /** 展开图标位置，可选项：left/right */
   expandIconPlacement: {
@@ -34,7 +34,16 @@ export default {
   /** 是否折叠 */
   collapsed: {
     type: Boolean,
-    default: true,
+    default: false,
+  },
+  /** 绑定折叠的状态 */
+  modelValue: {
+    type: Boolean as PropType<TdChatReasoningProps['modelValue']>,
+  },
+  /** 非受控折叠状态 */
+  defaultCollapsed: {
+    type: Boolean as PropType<TdChatReasoningProps['defaultCollapsed']>,
+    default: false,
   },
   /** 布局方式 */
   layout: {

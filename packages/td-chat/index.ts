@@ -27,6 +27,7 @@ import {
   TdChatSenderProps,
   TdChatReasoningProps,
   TdChatLoadingProps,
+  TdChatThinkingProps,
 } from './type';
 
 import './style';
@@ -45,6 +46,7 @@ export type ChatInputProps = TdChatInputProps;
 export type ChatSenderProps = TdChatSenderProps;
 export type ChatReasoningProps = TdChatReasoningProps;
 export type ChatLoadingProps = TdChatLoadingProps;
+export type ChatThinkingProps = TdChatThinkingProps;
 
 export const ChatList = withInstall(_ChatList);
 export const ChatSender = withInstall(_ChatSender);

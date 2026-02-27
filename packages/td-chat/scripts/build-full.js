@@ -154,14 +154,6 @@ function isExternal(id) {
     }
   }
   
-  // 内部路径标记为外部
-  const internalPaths = ['@tdesign/common-js', 'tdesign-vue/es'];
-  for (const p of internalPaths) {
-    if (id.startsWith(p)) {
-      return true;
-    }
-  }
-  
   return false;
 }
 
@@ -186,11 +178,7 @@ async function build() {
     format: 'esm',
     entryFileNames: '[name].mjs',
     chunkFileNames: '_chunks/[name]-[hash].mjs',
-    sourcemap: true,
-    paths: {
-      '@tdesign/common-js': '@tdesign/common-js',
-      'tdesign-vue/es/config-provider/hooks': 'tdesign-vue/es/config-provider/hooks'
-    }
+    sourcemap: true
   });
 
   // CommonJS
@@ -206,11 +194,7 @@ async function build() {
     entryFileNames: '[name].js',
     chunkFileNames: '_chunks/[name]-[hash].js',
     sourcemap: true,
-    exports: 'named',
-    paths: {
-      '@tdesign/common-js': '@tdesign/common-js',
-      'tdesign-vue/es/config-provider/hooks': 'tdesign-vue/es/config-provider/hooks'
-    }
+    exports: 'named'
   });
 
   // UMD

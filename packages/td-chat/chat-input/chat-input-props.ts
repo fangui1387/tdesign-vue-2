@@ -25,17 +25,21 @@ export default {
   stopDisabled: Boolean,
   /** 发送按钮的自定义扩展 */
   suffixIcon: {
-    type: [String, Function] as PropType<TdChatInputProps['suffixIcon']>,
+    type: Function as PropType<TdChatInputProps['suffixIcon']>,
   },
   /** 输入框的值 */
   value: {
-    type: String,
+    type: [String, Number] as PropType<TdChatInputProps['value']>,
     default: '',
   },
   /** 输入框的值，非受控属性 */
   defaultValue: {
-    type: String,
+    type: [String, Number] as PropType<TdChatInputProps['defaultValue']>,
     default: '',
+  },
+  /** 绑定输入框的值 */
+  modelValue: {
+    type: [String, Number] as PropType<TdChatInputProps['modelValue']>,
   },
   /** 输入框聚焦时触发 */
   onBlur: Function as PropType<TdChatInputProps['onBlur']>,

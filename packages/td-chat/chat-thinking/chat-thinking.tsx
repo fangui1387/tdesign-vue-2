@@ -4,7 +4,7 @@ import type { TdChatThinkContentProps } from 'tdesign-web-components/lib/chat-me
 import 'tdesign-web-components/lib/chat-message/content/thinking-content';
 import { omiVueify } from 'omi-vueify';
 import props from './chat-thinking-props';
-import { useTNodeJSX } from '@tdesign/shared-hooks';
+import { useTNodeJSX } from '../utils/hooks';
 
 const BaseChatThinking = omiVueify('t-chat-thinking-content', {
   methodNames: [],

@@ -4,7 +4,7 @@ import type { TdChatMessageProps } from 'tdesign-web-components';
 import 'tdesign-web-components/lib/chat-message';
 import { omiVueify } from 'omi-vueify';
 import props from './chat-message-props';
-import { useTNodeJSX } from '@tdesign/shared-hooks';
+import { useTNodeJSX } from '../utils/hooks';
 
 const BaseChatMessage = omiVueify('t-chat-item', {
   methodNames: [],

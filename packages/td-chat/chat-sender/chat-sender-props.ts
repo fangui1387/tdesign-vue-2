@@ -46,6 +46,10 @@ export default {
   defaultValue: {
     type: [String, Number] as PropType<TdChatSenderProps['defaultValue']>,
   },
+  /** 绑定输入框的值 */
+  modelValue: {
+    type: [String, Number] as PropType<TdChatSenderProps['modelValue']>,
+  },
   attachmentsProps: {
     type: Object as PropType<TdChatSenderProps['attachmentsProps']>,
   },

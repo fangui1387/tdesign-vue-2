@@ -19,13 +19,7 @@
     "strict": false,
     "noImplicitAny": false,
     "noImplicitThis": false,
-    "strictNullChecks": false,
-    "paths": {
-      "@tdesign/common-js/*": ["packages/common/*"],
-      "@common/*": ["packages/common/*"],
-      "tdesign-vue": ["packages/components/src"],
-      "tdesign-vue/es/*": ["packages/components/src/*"]
-    }
+    "strictNullChecks": false
   },
   "include": [
     "./**/*.ts",

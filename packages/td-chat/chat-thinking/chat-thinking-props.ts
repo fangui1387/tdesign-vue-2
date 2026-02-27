@@ -10,14 +10,28 @@ export default {
   content: {
     type: [String, Function] as PropType<string | Function>,
   },
-  /** 是否处于思考状态 */
-  thinking: {
+  /** 布局方式 */
+  layout: {
+    type: String as PropType<'block' | 'border'>,
+    default: 'block',
+  },
+  /** 最大高度 */
+  maxHeight: {
+    type: [String, Number] as PropType<string | number>,
+  },
+  /** 动画效果 */
+  animation: {
+    type: String as PropType<'dots' | 'moving' | 'gradient'>,
+    default: 'dots',
+  },
+  /** 是否折叠 */
+  collapsed: {
     type: Boolean,
     default: false,
   },
   /** 状态 */
   status: {
-    type: String as PropType<'thinking' | 'done' | 'error'>,
-    default: 'thinking',
+    type: String as PropType<'pending' | 'complete' | 'stop' | 'error'>,
+    default: 'pending',
   },
 };

@@ -26,11 +26,19 @@ export default {
   defaultScrollTo: {
     type: String as PropType<TdChatProps['defaultScrollTo']>,
     default: 'bottom',
+    validator(val: string): boolean {
+      if (!val) return true;
+      return ['top', 'bottom'].includes(val);
+    },
   },
   /** 动画效果 */
   animation: {
     type: String as PropType<TdChatProps['animation']>,
     default: 'skeleton',
+    validator(val: string): boolean {
+      if (!val) return true;
+      return ['skeleton', 'moving', 'gradient'].includes(val);
+    },
   },
   /** 自定义每个对话单元的头像插槽 */
   avatar: {
@@ -48,7 +56,6 @@ export default {
   /** 对话列表的数据 */
   data: {
     type: Array as PropType<TdChatProps['data']>,
-    default: () => [],
   },
   /** 自定义每个对话单元的时间 */
   datetime: {
@@ -60,6 +67,10 @@ export default {
   layout: {
     type: String as PropType<TdChatProps['layout']>,
     default: 'both',
+    validator(val: string): boolean {
+      if (!val) return true;
+      return ['both', 'single'].includes(val);
+    },
   },
   /** 自定义每个对话单元的昵称 */
   name: {
@@ -72,7 +83,7 @@ export default {
   /** 是否表现为倒序 */
   reverse: {
     type: Boolean,
-    default: true,
+    default: false,
   },
   /** 是否显示"回到底部"按钮 */
   showScrollButton: {

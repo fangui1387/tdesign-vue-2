@@ -1,9 +1,8 @@
 import { defineComponent, computed, provide, ref, onMounted, onUnmounted } from 'vue';
 import { ClearIcon, ArrowDownIcon } from 'tdesign-icons-vue';
-import { useConfig } from 'tdesign-vue/es/config-provider/hooks';
+import { useConfig, usePrefixClass, useTNodeJSX } from '../utils/hooks';
 import { isArray, throttle, debounce } from 'lodash-es';
 import { Divider, Popconfirm, Button } from 'tdesign-vue';
-import { usePrefixClass, useTNodeJSX } from '@tdesign/shared-hooks';
 import { ChatMessage } from '../chat-message';
 import { TdChatItemMeta, ScrollToBottomParams } from '../type';
 

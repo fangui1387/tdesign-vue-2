@@ -9,7 +9,7 @@
     "serve": "vite preview"
   },
   "dependencies": {
-    "@jump-mp/td-chat": "^0.1.0",
+    "@jump-mp/td-chat": "file:../td-chat",
     "clipboard": "^2.0.11",
     "highlight.js": "^11.9.0",
     "less": "^4.1.3",

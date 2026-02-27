@@ -2,8 +2,7 @@ import { defineComponent, ref, computed, toRefs, reactive, Fragment } from 'vue'
 import { SendFilledIcon, FileAttachmentIcon, ImageIcon } from 'tdesign-icons-vue';
 import { Button, Textarea, Tooltip } from 'tdesign-vue';
 import Attachments from '../attachments';
-import { useConfig } from 'tdesign-vue/es/config-provider/hooks';
-import { usePrefixClass, useTNodeJSX, useVModel } from '@tdesign/shared-hooks';
+import { useConfig, usePrefixClass, useTNodeJSX, useVModel } from '../utils/hooks';
 import props from './chat-sender-props';
 
 import type { TdChatSenderProps, UploadActionType, UploadActionConfig } from '../type';
