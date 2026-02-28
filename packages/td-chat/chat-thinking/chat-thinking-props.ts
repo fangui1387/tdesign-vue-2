@@ -8,7 +8,7 @@ import { PropType } from 'vue';
 export default {
   /** 思考内容 */
   content: {
-    type: [String, Function] as PropType<string | Function>,
+    type: [Object, Function] as PropType<string | Function>,
   },
   /** 布局方式 */
   layout: {
@@ -17,12 +17,12 @@ export default {
   },
   /** 最大高度 */
   maxHeight: {
-    type: [String, Number] as PropType<string | number>,
+    type: Number as PropType<number>,
   },
   /** 动画效果 */
   animation: {
     type: String as PropType<'dots' | 'moving' | 'gradient'>,
-    default: 'dots',
+    default: 'moving',
   },
   /** 是否折叠 */
   collapsed: {

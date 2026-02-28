@@ -16,8 +16,8 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { Form, MessagePlugin } from 'tdesign-vue-next';
-import { DesktopIcon, LockOnIcon } from 'tdesign-icons-vue-next';
+import { Form, MessagePlugin } from 'tdesign-vue';
+import { DesktopIcon, LockOnIcon } from 'tdesign-icons-vue';
 
 export default defineComponent({
   name: 'LoginForm',

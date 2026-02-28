@@ -15,10 +15,9 @@ export default {
   /** 角色，不同选项配置不同的样式，支持类型包括用户、助手、错误、模型切换、系统消息 */
   role: {
     type: String as PropType<TdChatContentProps['role']>,
-    default: '',
-    validator(val: string): boolean {
+    validator(val: TdChatContentProps['role']): boolean {
       if (!val) return true;
-      return ['', 'user', 'assistant', 'error', 'model-change', 'system'].includes(val);
+      return ['user', 'assistant', 'model-change', 'system'].includes(val);
     },
   },
   /** Markdown引擎类型，用于解析Markdown内容 */

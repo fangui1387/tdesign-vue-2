@@ -1,5 +1,5 @@
 {
-  "name": "tdesign-vue-next-demo",
+  "name": "tdesign-vue-demo",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -9,7 +9,7 @@
     "serve": "vite preview"
   },
   "dependencies": {
-    "@jump-mp/td-chat": "^0.1.15",
+    "@jump-mp/td-chat": "^0.1.19",
     "clipboard": "^2.0.11",
     "highlight.js": "^11.9.0",
     "less": "^4.1.3",

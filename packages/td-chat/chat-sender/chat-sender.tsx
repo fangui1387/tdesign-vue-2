@@ -22,8 +22,8 @@ export default defineComponent({
     const senderTextarea = ref(null);
     const COMPONENT_NAME = usePrefixClass('chat');
     const { globalConfig } = useConfig('chat');
-    const { value } = toRefs(props);
-    const [textValue, setInnerValue] = useVModel(value, props.defaultValue, props.onChange);
+    const { value, modelValue } = toRefs(props);
+    const [textValue, setInnerValue] = useVModel(value, modelValue, props.defaultValue, props.onChange);
 
     const focusFlag = ref(false);
     const showStopBtn = computed(() => props.loading || props.stopDisabled);

@@ -1071,8 +1071,8 @@ importers:
   packages/vue2-demo:
     dependencies:
       '@jump-mp/td-chat':
-        specifier: ^0.1.15
-        version: 0.1.15(tdesign-vue@1.10.9(vue@2.7.16))(vue@2.7.16)
+        specifier: ^0.1.19
+        version: 0.1.19(tdesign-vue@1.10.9(vue@2.7.16))(vue@2.7.16)
       clipboard:
         specifier: ^2.0.11
         version: 2.0.11
@@ -2109,8 +2109,8 @@ packages:
   '@jridgewell/trace-mapping@0.3.9':
     resolution: {integrity: sha512-3Belt6tdc8bPgAtbcmdtNJlirVoTmEb5e2gC94PnkwEW9jI6CAHUeoG85tjWP5WquqfavoMtMwiG4P926ZKKuQ==}
 
-  '@jump-mp/td-chat@0.1.15':
-    resolution: {integrity: sha512-U/6YwZiOeAkZBD2Ovi68Odi3HjyRTm2qQGVHgzbq46wfP8l2an9bzIioM91boSTkcbpsKBFwsYjZ9WgeyyGrog==}
+  '@jump-mp/td-chat@0.1.19':
+    resolution: {integrity: sha512-zHe97ttv3H4eLgwHP2OfkVpiF9+hW7J9ORy9w93aa6k8FXIZFgzj7rqW9YHhWyDMTffa8A2LrcRyyJV46FqBHQ==}
     peerDependencies:
       tdesign-vue: ^1.0.0
       vue: ^2.7.16
@@ -8453,8 +8453,8 @@ snapshots:
 
   '@babel/helper-member-expression-to-functions@7.27.1':
     dependencies:
-      '@babel/traverse': 7.27.7
-      '@babel/types': 7.27.7
+      '@babel/traverse': 7.29.0
+      '@babel/types': 7.29.0
     transitivePeerDependencies:
       - supports-color
 
@@ -8501,7 +8501,7 @@ snapshots:
 
   '@babel/helper-optimise-call-expression@7.27.1':
     dependencies:
-      '@babel/types': 7.27.7
+      '@babel/types': 7.29.0
 
   '@babel/helper-plugin-utils@7.27.1': {}
 
@@ -8558,9 +8558,9 @@ snapshots:
 
   '@babel/helper-wrap-function@7.27.1':
     dependencies:
-      '@babel/template': 7.27.2
-      '@babel/traverse': 7.27.7
-      '@babel/types': 7.27.7
+      '@babel/template': 7.28.6
+      '@babel/traverse': 7.29.0
+      '@babel/types': 7.29.0
     transitivePeerDependencies:
       - supports-color
 
@@ -9943,7 +9943,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
 
-  '@jump-mp/td-chat@0.1.15(tdesign-vue@1.10.9(vue@2.7.16))(vue@2.7.16)':
+  '@jump-mp/td-chat@0.1.19(tdesign-vue@1.10.9(vue@2.7.16))(vue@2.7.16)':
     dependencies:
       clipboard: 2.0.11
       lodash-es: 4.17.21
@@ -10782,7 +10782,7 @@ snapshots:
       '@babel/helper-module-imports': 7.27.1
       '@babel/helper-plugin-utils': 7.27.1
       '@babel/parser': 7.27.7
-      '@vue/compiler-sfc': 3.5.18
+      '@vue/compiler-sfc': 3.5.29
     transitivePeerDependencies:
       - supports-color
 
@@ -10924,7 +10924,7 @@ snapshots:
 
   '@vue/compiler-sfc@2.7.14':
     dependencies:
-      '@babel/parser': 7.28.0
+      '@babel/parser': 7.29.0
       postcss: 8.5.6
       source-map: 0.6.1
 
@@ -11514,7 +11514,7 @@ snapshots:
 
   babel-walk@3.0.0-canary-5:
     dependencies:
-      '@babel/types': 7.28.1
+      '@babel/types': 7.29.0
     optional: true
 
   balanced-match@1.0.2: {}
@@ -11810,8 +11810,8 @@ snapshots:
 
   constantinople@4.0.1:
     dependencies:
-      '@babel/parser': 7.28.0
-      '@babel/types': 7.28.1
+      '@babel/parser': 7.29.0
+      '@babel/types': 7.29.0
     optional: true
 
   construct-style-sheets-polyfill@3.0.1: {}
@@ -16794,8 +16794,8 @@ snapshots:
 
   with@7.0.2:
     dependencies:
-      '@babel/parser': 7.28.0
-      '@babel/types': 7.28.1
+      '@babel/parser': 7.29.0
+      '@babel/types': 7.29.0
       assert-never: 1.4.0
       babel-walk: 3.0.0-canary-5
     optional: true

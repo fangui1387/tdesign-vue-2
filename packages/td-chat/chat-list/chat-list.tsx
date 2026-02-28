@@ -5,6 +5,7 @@ import { isArray, throttle, debounce } from 'lodash-es';
 import { Divider, Popconfirm, Button } from 'tdesign-vue';
 import { ChatMessage } from '../chat-message';
 import { TdChatItemMeta, ScrollToBottomParams } from '../type';
+import props from './props';
 
 const handleScrollToBottom = (target: HTMLDivElement, behavior?: 'auto' | 'smooth') => {
   const currentScrollHeight = target.scrollHeight;
