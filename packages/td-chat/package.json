@@ -1,6 +1,6 @@
 {
   "name": "@jump-mp/td-chat",
-  "version": "0.1.19",
+  "version": "0.1.20",
   "description": "TDesign Chat Components for Vue 2.7",
   "main": "lib/index.js",
   "module": "es/index.mjs",
@@ -17,8 +17,13 @@
   "license": "MIT",
   "dependencies": {
     "clipboard": "^2.0.11",
+    "highlight.js": "^11.11.1",
     "lodash-es": "^4.17.21",
-    "tdesign-icons-vue": "^0.3.4"
+    "marked": "^12.0.2",
+    "marked-highlight": "^2.2.1",
+    "tdesign-icons-vue": "^0.3.4",
+    "tdesign-web-components": "1.3.0-alpha.2",
+    "@tdesign/shared-utils": "workspace:^"
   },
   "devDependencies": {
     "@babel/core": "^7.23.0",

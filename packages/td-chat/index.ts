@@ -31,10 +31,6 @@ import {
 } from './type';
 
 import './style';
-import 'tdesign-web-components/lib/style/index.css';
-import 'tdesign-web-components/lib/chat-message/content/search-content';
-import 'tdesign-web-components/lib/chat-message/content/suggestion-content';
-import { TdMarkdownEngine } from 'tdesign-web-components/lib/chat-message';
 
 export * from './type';
 
@@ -69,8 +65,6 @@ export const ChatInput = withInstall(_ChatInput);
 export const ChatReasoning = withInstall(_ChatReasoning);
 export const ChatItem = withInstall(_ChatItem);
 
-export { TdMarkdownEngine as MarkdownEngine };
-
 export { ToolCallRenderer };
 
 export default {
@@ -95,18 +89,3 @@ export default {
   },
   version: typeof PKG_VERSION === 'undefined' ? '' : PKG_VERSION,
 };
-
-export {
-  AGUIAdapter,
-  getMessageContentForCopy,
-  isAIMessage,
-  isToolCallContent,
-} from 'tdesign-web-components/lib/chat-engine';
-
-export type {
-  SSEChunkData,
-  AIMessageContent,
-  ChatRequestParams,
-  ChatMessagesData,
-  ChatServiceConfig,
-} from 'tdesign-web-components/lib/chat-engine';

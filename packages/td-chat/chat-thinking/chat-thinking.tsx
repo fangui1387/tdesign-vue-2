@@ -1,38 +1,124 @@
-import { defineComponent } from 'vue';
-import type { DefineComponent } from 'vue';
-import type { TdChatThinkContentProps } from 'tdesign-web-components/lib/chat-message/content/thinking-content';
-import 'tdesign-web-components/lib/chat-message/content/thinking-content';
-import { omiVueify } from 'omi-vueify';
+import { defineComponent, computed, ref, watch } from 'vue';
+import { Collapse, CollapsePanel } from 'tdesign-vue';
+import { CheckCircleIcon, CloseCircleIcon } from 'tdesign-icons-vue';
+import { usePrefixClass, useTNodeJSX } from '../utils/hooks';
 import props from './chat-thinking-props';
-import { useTNodeJSX } from '../utils/hooks';
-
-const BaseChatThinking = omiVueify('t-chat-thinking-content', {
-  methodNames: [],
-}) as DefineComponent<TdChatThinkContentProps>;
+import ChatLoading from '../chat-loading';
 
 export default defineComponent({
-  name: 'ChatThinking',
+  name: 'TChatThinking',
   props,
-  setup(props, { slots }) {
+  emits: ['collapsed-change'],
+  setup(props, { slots, emit }) {
+    const COMPONENT_NAME = usePrefixClass('chat__item');
     const renderTNodeJSX = useTNodeJSX();
+    const innerCollapsed = ref(props.collapsed);
 
-    const renderContent = () => {
-      const vSlots = {
-        content: () => {
-          const content = (renderTNodeJSX('content', { slotFirst: true }) && slots.content?.()) || slots.default?.();
-          return content ? <div>{content}</div> : null;
-        },
-      };
+    watch(
+      () => props.collapsed,
+      (val) => {
+        innerCollapsed.value = val;
+      },
+    );
+
+    const layoutClass = computed(() =>
+      props.layout === 'border' ? `${COMPONENT_NAME.value}__think-layout-border` : '',
+    );
+
+    const contentStyle = computed(() => {
+      if (props.maxHeight) {
+        const height = typeof props.maxHeight === 'number' ? `${props.maxHeight}px` : props.maxHeight;
+        return {
+          maxHeight: height,
+          overflowY: 'auto',
+        };
+      }
+      return {};
+    });
+
+    const onChangeFn = (value: Array<number>) => {
+      const newCollapsed = value.length === 0;
+      innerCollapsed.value = newCollapsed;
+      emit('collapsed-change', newCollapsed);
+    };
+
+    const renderThinkingStatus = () => {
+      const { status } = props;
+      if (status === 'complete' || status === 'stop') {
+        return (
+          <CheckCircleIcon
+            class={`${COMPONENT_NAME.value}__think__status--complete`}
+            style={{ color: 'var(--td-success-color, #00a870)', fontSize: '18px' }}
+          />
+        );
+      }
+      if (status === 'error') {
+        return (
+          <CloseCircleIcon
+            class={`${COMPONENT_NAME.value}__think__status--error`}
+            style={{ color: 'var(--td-error-color, #d54941)', fontSize: '18px' }}
+          />
+        );
+      }
+      return <ChatLoading animation={props.animation} />;
+    };
+
+    const renderHeader = () => {
+      const { status } = props;
+      const content = props.content as any;
+      const title = content?.title || '正在思考中...';
+
       return (
-        <BaseChatThinking
-          {...(props as TdChatThinkContentProps)}
-          v-slots={{
-            ...vSlots,
-          }}
-        />
+        <div class={`${COMPONENT_NAME.value}__think__header__content`}>
+          {status !== 'stop' && renderThinkingStatus()}
+          {status === 'stop' ? '思考已终止' : title}
+        </div>
       );
     };
 
-    return renderContent;
+    const renderContent = () => {
+      const content = props.content as any;
+      const text = content?.text;
+
+      const slotContent = slots.content?.() || slots.default?.() || renderTNodeJSX('content');
+
+      if (slotContent) {
+        return <div style={contentStyle.value}>{slotContent}</div>;
+      }
+
+      if (text) {
+        return (
+          <div class={`${COMPONENT_NAME.value}__think__inner`} style={contentStyle.value}>
+            {text.split('\n').filter(Boolean).map((paragraph: string, index: number) => (
+              <p key={index}>{paragraph}</p>
+            ))}
+          </div>
+        );
+      }
+
+      return null;
+    };
+
+    return () => (
+      <div class={`${COMPONENT_NAME.value}__think ${layoutClass.value}`}>
+        <Collapse
+          borderless={true}
+          expandIconPlacement="right"
+          onChange={onChangeFn}
+          value={innerCollapsed.value ? [] : [0]}
+        >
+          <CollapsePanel
+            expandIcon={true}
+            value={0}
+            {...{
+              scopedSlots: {
+                header: renderHeader,
+                default: renderContent,
+              },
+            }}
+          />
+        </Collapse>
+      </div>
+    );
   },
-}) as any;
+});

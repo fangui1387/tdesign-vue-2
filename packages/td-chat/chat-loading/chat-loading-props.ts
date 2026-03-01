@@ -14,7 +14,7 @@ export default {
     default: 'gradient' as TdChatLoadingProps['animation'],
     validator(val: TdChatLoadingProps['animation']): boolean {
       if (!val) return true;
-      return ['moving', 'gradient'].includes(val);
+      return ['skeleton', 'moving', 'gradient', 'circle'].includes(val);
     },
   },
   /** 加载过程展示的文字内容 */

@@ -16,14 +16,14 @@ export default defineComponent({
       default: () => ({ items: [], overflow: 'scrollX' }),
     },
   },
-  emits: ['send', 'stop', 'update:modelValue', 'blur', 'focus', 'fileSelect', 'remove', 'fileClick'],
+  emits: ['send', 'stop', 'blur', 'focus', 'fileSelect', 'remove', 'fileClick'],
   setup(props, { emit }) {
     const isComposition = false;
     const senderTextarea = ref(null);
     const COMPONENT_NAME = usePrefixClass('chat');
     const { globalConfig } = useConfig('chat');
-    const { value, modelValue } = toRefs(props);
-    const [textValue, setInnerValue] = useVModel(value, modelValue, props.defaultValue, props.onChange);
+    const { value } = toRefs(props);
+    const [textValue, setInnerValue] = useVModel(value, props.defaultValue, props.onChange);
 
     const focusFlag = ref(false);
     const showStopBtn = computed(() => props.loading || props.stopDisabled);

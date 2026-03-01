@@ -1,9 +1,4 @@
-import 'tdesign-web-components/lib/chat-message/content/markdown-content';
-import type { DefineComponent } from 'vue';
-import { omiVueify } from 'omi-vueify';
-import type { TdChatMarkdownContentProps } from 'tdesign-web-components/lib/chat-message/content/markdown-content';
+import ChatMarkdown from './chat-markdown';
 
-export const ChatMarkdown = omiVueify('t-chat-md-content', {
-  methodNames: [],
-}) as DefineComponent<TdChatMarkdownContentProps>;
+export { ChatMarkdown };
 export default ChatMarkdown;

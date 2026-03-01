@@ -32,10 +32,6 @@ export default {
     type: [String, Number] as PropType<TdChatInputProps['value']>,
     default: undefined as TdChatInputProps['value'],
   },
-  modelValue: {
-    type: [String, Number] as PropType<TdChatInputProps['value']>,
-    default: undefined as TdChatInputProps['value'],
-  },
   /** 输入框的值，非受控属性 */
   defaultValue: {
     type: [String, Number] as PropType<TdChatInputProps['defaultValue']>,

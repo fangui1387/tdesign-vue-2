@@ -38,7 +38,7 @@ export default defineComponent({
   name: 'TChatList',
   props,
   emits: ['clear', 'scroll'],
-  setup(props, { emit, expose }) {
+  setup(props, { emit }) {
     const COMPONENT_NAME = usePrefixClass('chat');
     const { globalConfig } = useConfig('chat');
     const renderTNodeJSX = useTNodeJSX();
@@ -89,19 +89,21 @@ export default defineComponent({
             datetime={item.datetime}
             animation={props.animation}
             placement={setPlacement(item)}
-            v-slots={{
-              actionbar: () =>
-                renderTNodeJSX('actionbar', {
-                  params: { item, index },
-                }) ||
-                renderTNodeJSX('actions', {
-                  params: { item, index },
-                }),
-              name: () => renderTNodeJSX('name', { params: { item, index } }),
-              avatar: () => renderTNodeJSX('avatar', { params: { item, index } }),
-              datetime: () => renderTNodeJSX('datetime', { params: { item, index } }),
-              header: () => renderTNodeJSX('header', { params: { item, index } }),
-              content: () => renderTNodeJSX('content', { params: { item, index } }),
+            {...{
+              scopedSlots: {
+                actionbar: () =>
+                  renderTNodeJSX('actionbar', {
+                    params: { item, index },
+                  }) ||
+                  renderTNodeJSX('actions', {
+                    params: { item, index },
+                  }),
+                name: () => renderTNodeJSX('name', { params: { item, index } }),
+                avatar: () => renderTNodeJSX('avatar', { params: { item, index } }),
+                datetime: () => renderTNodeJSX('datetime', { params: { item, index } }),
+                header: () => renderTNodeJSX('header', { params: { item, index } }),
+                content: () => renderTNodeJSX('content', { params: { item, index } }),
+              },
             }}
           />
         ));
@@ -248,20 +250,48 @@ export default defineComponent({
       scrollToBottom({ behavior: 'smooth' });
     };
 
-    expose({
+    return {
       scrollToBottom,
-    });
+      classes,
+      listClasses,
+      listRef,
+      innerRef,
+      handleScroll,
+      renderBody,
+      renderTNodeJSX,
+      defaultClearHistory,
+      showFooter,
+      scrollButtonVisible,
+      backBottom,
+      COMPONENT_NAME,
+    };
+  },
+  render() {
+    const {
+      classes,
+      listClasses,
+      listRef,
+      innerRef,
+      handleScroll,
+      renderBody,
+      renderTNodeJSX,
+      defaultClearHistory,
+      showFooter,
+      scrollButtonVisible,
+      backBottom,
+      COMPONENT_NAME,
+    } = this as any;
 
-    const renderContent = () => (
+    return (
       <div class={classes.value}>
         <div class={listClasses.value} ref={listRef} onScroll={handleScroll}>
-          {props.reverse && <div class="place-holder"></div>}
-          {props.reverse && props.clearHistory && renderTNodeJSX('clearHistory', defaultClearHistory)}
-          {props.reverse ? renderBody() : <div ref={innerRef}>{renderBody()}</div>}
-          {!props.reverse && props.clearHistory && renderTNodeJSX('clearHistory', defaultClearHistory)}
+          {this.reverse && <div class="place-holder"></div>}
+          {this.reverse && this.clearHistory && renderTNodeJSX('clearHistory', defaultClearHistory)}
+          {this.reverse ? renderBody() : <div ref={innerRef}>{renderBody()}</div>}
+          {!this.reverse && this.clearHistory && renderTNodeJSX('clearHistory', defaultClearHistory)}
         </div>
         {showFooter.value && <div class={`${COMPONENT_NAME.value}__footer`}>{showFooter.value}</div>}
-        {props.showScrollButton && scrollButtonVisible.value && (
+        {this.showScrollButton && scrollButtonVisible.value && (
           <Button variant="text" class={`${COMPONENT_NAME.value}__to-bottom`} onClick={backBottom}>
             <div class={`${COMPONENT_NAME.value}__to-bottom-inner`}>
               <ArrowDownIcon />
@@ -270,6 +300,5 @@ export default defineComponent({
         )}
       </div>
     );
-    return renderContent;
   },
 });

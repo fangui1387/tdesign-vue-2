@@ -6,8 +6,10 @@
 
 import { AvatarProps } from 'tdesign-vue';
 import { TextareaProps } from 'tdesign-vue';
-import { CollapsePanelProps } from 'tdesign-vue';
-import { TNode } from 'tdesign-vue';
+import { TdCollapsePanelProps } from 'tdesign-vue';
+import type { TNode } from 'tdesign-vue';
+
+export type { TNode } from 'tdesign-vue';
 
 export interface TdChatProps {
   /**
@@ -112,7 +114,7 @@ export interface TdChatLoadingProps {
    * 加载的状态形式
    * @default moving
    */
-  animation?: 'moving' | 'gradient';
+  animation?: 'skeleton' | 'moving' | 'gradient' | 'circle';
   /**
    * 加载过程展示的文字内容
    * @default ''
@@ -364,10 +366,6 @@ export interface TdChatSenderProps {
    */
   textareaProps?: TextareaProps;
   /**
-   * 绑定输入框的值
-   */
-  modelValue?: string | number;
-  /**
    * 输入框的值
    * @default ''
    */
@@ -410,7 +408,7 @@ export interface TdChatReasoningProps {
   /**
    * 透传给 CollapsePanel 组件的全部属性
    */
-  collapsePanelProps?: CollapsePanelProps;
+  collapsePanelProps?: TdCollapsePanelProps;
   /**
    * 当前折叠面板展开图标。优先级低于collapsePanelProps.expandIcon
    */
@@ -535,9 +533,3 @@ export interface UploadActionConfig {
    */
   action: (params: { files: File[]; name: UploadActionType; e?: Event }) => void;
 }
-
-export type * from 'tdesign-web-components/lib/chat-sender/type';
-export type * from 'tdesign-web-components/lib/filecard/type';
-export type * from 'tdesign-web-components/lib/chat-message/index';
-export type * from 'tdesign-web-components/lib/chatbot/type';
-export type * from 'tdesign-web-components/lib/chat-action/type';

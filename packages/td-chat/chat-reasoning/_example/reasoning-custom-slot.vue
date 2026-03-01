@@ -1,5 +1,5 @@
 <template>
-  <t-chat-reasoning v-model:collapsed="collapsed" expand-icon-placement="right" @expand-change="handleChange">
+  <t-chat-reasoning :collapsed.sync="collapsed" expand-icon-placement="right" @expand-change="handleChange">
     <template #header>
       <t-chat-loading text="思考中..." />
     </template>

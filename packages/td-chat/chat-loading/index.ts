@@ -1,9 +1,5 @@
-import { TdChatLoadingProps } from 'tdesign-web-components';
-import 'tdesign-web-components/lib/chat-loading';
-import type { DefineComponent } from 'vue';
-import { omiVueify } from 'omi-vueify';
+import _ChatLoading from './chat-loading.vue';
+import { withInstall } from '@tdesign/shared-utils';
 
-export const ChatLoading = omiVueify('t-chat-loading', {
-  methodNames: [],
-}) as DefineComponent<TdChatLoadingProps>;
+export const ChatLoading = withInstall(_ChatLoading);
 export default ChatLoading;

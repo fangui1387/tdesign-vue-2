@@ -82,5 +82,10 @@
     "*.{vue,js,jsx,ts,tsx}": [
       "prettier --write --cache"
     ]
+  },
+  "pnpm": {
+    "overrides": {
+      "tdesign-vue": "1.10.0-naruto"
+    }
   }
 }

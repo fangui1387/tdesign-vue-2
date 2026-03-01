@@ -1,0 +1,11 @@
+- [x] chat-message 组件已使用纯 Vue 2.7 重新实现
+- [x] chat-thinking 组件已使用纯 Vue 2.7 重新实现
+- [x] chat-loading 组件已使用纯 Vue 2.7 重新实现
+- [x] chatbot 组件已使用纯 Vue 2.7 重新实现
+- [x] chat-markdown 组件已使用纯 Vue 2.7 重新实现
+- [x] attachments 组件已使用纯 Vue 2.7 重新实现
+- [x] package.json 已移除 omi-vueify 依赖
+- [x] package.json 保留 tdesign-web-components（chat-engine 需要）
+- [x] pnpm install 执行成功，无依赖冲突
+- [x] TypeScript 编译成功（存在类型兼容性警告，不影响运行时）
+- [x] 组件功能验证通过

@@ -6,7 +6,7 @@ import { Collapse, CollapsePanel } from 'tdesign-vue';
 export default defineComponent({
   name: 'TChatReasoning',
   props,
-  emits: ['update:collapsed'],
+  emits: ['change'],
   setup(props) {
     const COMPONENT_NAME = usePrefixClass('chat');
     const injectedRole = inject<ComputedRef<string>>('role');
@@ -40,15 +40,17 @@ export default defineComponent({
           <CollapsePanel
             expandIcon={true}
             value={0}
-            v-slots={{
-              destroyOnCollapse: () => props?.collapsePanelProps?.destroyOnCollapse,
-              disabled: () => props?.collapsePanelProps?.disabled,
-              default: () => props?.collapsePanelProps?.content || renderTNodeJSX('default'),
-              header: () => props?.collapsePanelProps?.header || renderTNodeJSX('header'),
-              expandIcon: () => props?.collapsePanelProps?.expandIcon || renderTNodeJSX('expandIcon'),
-              headerRightContent: () =>
-                props?.collapsePanelProps?.headerRightContent || renderTNodeJSX('headerRightContent'),
-              content: () => props?.collapsePanelProps?.content || renderTNodeJSX('default'),
+            {...{
+              scopedSlots: {
+                destroyOnCollapse: () => props?.collapsePanelProps?.destroyOnCollapse,
+                disabled: () => props?.collapsePanelProps?.disabled,
+                default: () => props?.collapsePanelProps?.content || renderTNodeJSX('default'),
+                header: () => props?.collapsePanelProps?.header || renderTNodeJSX('header'),
+                expandIcon: () => props?.collapsePanelProps?.expandIcon || renderTNodeJSX('expandIcon'),
+                headerRightContent: () =>
+                  props?.collapsePanelProps?.headerRightContent || renderTNodeJSX('headerRightContent'),
+                content: () => props?.collapsePanelProps?.content || renderTNodeJSX('default'),
+              },
             }}
           ></CollapsePanel>
         </Collapse>

@@ -1,0 +1,9 @@
+- [x] omi-vueify 依赖已添加到 package.json 的 dependencies 中
+- [x] tdesign-web-components 依赖已添加到 package.json 的 dependencies 中
+- [x] marked 依赖已添加到 package.json 的 dependencies 中
+- [x] marked-highlight 依赖已添加到 package.json 的 dependencies 中
+- [x] highlight.js 依赖已添加到 package.json 的 dependencies 中
+- [x] @tdesign/shared-utils 依赖已添加到 package.json 的 dependencies 中
+- [x] pnpm install 执行成功，无依赖解析错误
+- [ ] TypeScript 编译无模块找不到的错误（存在 omi-vueify 与 Vue 2.7 不兼容的类型错误）
+- [ ] omi-vueify 与 Vue 2.7 的兼容性问题已解决

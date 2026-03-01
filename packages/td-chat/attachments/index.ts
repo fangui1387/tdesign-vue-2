@@ -1,9 +1,4 @@
-import 'tdesign-web-components/lib/attachments';
-import type { TdAttachmentsProps } from 'tdesign-web-components';
-import type { DefineComponent } from 'vue';
-import { omiVueify } from 'omi-vueify';
+import _Attachments from './attachments';
 
-export const Attachments = omiVueify('t-attachments', {
-  methodNames: [],
-}) as DefineComponent<TdAttachmentsProps>;
-export default Attachments;
+export type { TdAttachmentItem, TdAttachmentsProps } from './attachments-props';
+export default _Attachments;

@@ -3,7 +3,7 @@
     <t-button theme="primary" @click="visibleModelessDrag = true">AI助手可拖拽</t-button>
   </t-space>
   <t-dialog
-    v-model:visible="visibleModelessDrag"
+    :visible.sync="visibleModelessDrag"
     :footer="false"
     header="AI助手"
     mode="modeless"

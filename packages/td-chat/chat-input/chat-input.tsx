@@ -7,7 +7,7 @@ import props from './chat-input-props';
 export default defineComponent({
   name: 'TChatInput',
   props,
-  emits: ['send', 'stop', 'update:modelValue', 'blur', 'focus'],
+  emits: ['send', 'stop', 'blur', 'focus'],
   setup(props, { emit }) {
     const COMPONENT_NAME = usePrefixClass('chat');
     const { globalConfig } = useConfig('chat');
