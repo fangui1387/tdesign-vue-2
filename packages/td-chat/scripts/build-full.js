@@ -51,7 +51,7 @@ const packageJson = {
 const babelConfig = `module.exports = {
   presets: [
     ['@babel/preset-env', { modules: false }],
-    ['@vue/babel-preset-jsx', { compositionAPI: false }],
+    ['@vue/babel-preset-jsx', { compositionAPI: true }],
     '@babel/preset-typescript'
   ],
   plugins: [

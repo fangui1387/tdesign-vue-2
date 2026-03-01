@@ -267,33 +267,25 @@ export default defineComponent({
     };
   },
   render() {
-    const {
-      classes,
-      listClasses,
-      listRef,
-      innerRef,
-      handleScroll,
-      renderBody,
-      renderTNodeJSX,
-      defaultClearHistory,
-      showFooter,
-      scrollButtonVisible,
-      backBottom,
-      COMPONENT_NAME,
-    } = this as any;
+    const ctx = this as any;
+    const classes = ctx.classes?.value ?? [];
+    const listClasses = ctx.listClasses?.value ?? [];
+    const componentName = ctx.COMPONENT_NAME?.value ?? 't-chat';
+    const showFooterVal = ctx.showFooter?.value;
+    const scrollButtonVisibleVal = ctx.scrollButtonVisible?.value;
 
     return (
-      <div class={classes.value}>
-        <div class={listClasses.value} ref={listRef} onScroll={handleScroll}>
-          {this.reverse && <div class="place-holder"></div>}
-          {this.reverse && this.clearHistory && renderTNodeJSX('clearHistory', defaultClearHistory)}
-          {this.reverse ? renderBody() : <div ref={innerRef}>{renderBody()}</div>}
-          {!this.reverse && this.clearHistory && renderTNodeJSX('clearHistory', defaultClearHistory)}
+      <div class={classes}>
+        <div class={listClasses} ref={ctx.listRef} onScroll={ctx.handleScroll}>
+          {ctx.reverse && <div class="place-holder"></div>}
+          {ctx.reverse && ctx.clearHistory && ctx.renderTNodeJSX('clearHistory', ctx.defaultClearHistory)}
+          {ctx.reverse ? ctx.renderBody() : <div ref={ctx.innerRef}>{ctx.renderBody()}</div>}
+          {!ctx.reverse && ctx.clearHistory && ctx.renderTNodeJSX('clearHistory', ctx.defaultClearHistory)}
         </div>
-        {showFooter.value && <div class={`${COMPONENT_NAME.value}__footer`}>{showFooter.value}</div>}
-        {this.showScrollButton && scrollButtonVisible.value && (
-          <Button variant="text" class={`${COMPONENT_NAME.value}__to-bottom`} onClick={backBottom}>
-            <div class={`${COMPONENT_NAME.value}__to-bottom-inner`}>
+        {showFooterVal && <div class={`${componentName}__footer`}>{showFooterVal}</div>}
+        {ctx.showScrollButton && scrollButtonVisibleVal && (
+          <Button variant="text" class={`${componentName}__to-bottom`} onClick={ctx.backBottom}>
+            <div class={`${componentName}__to-bottom-inner`}>
               <ArrowDownIcon />
             </div>
           </Button>

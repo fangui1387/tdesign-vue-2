@@ -49,9 +49,15 @@ export default {
       return ['user', 'assistant', 'error', 'model-change', 'system'].includes(val);
     },
   },
-  /** 内容 */
+  /** 内容，支持字符串、渲染函数或分段数组（如 AGUI 协议的多段 content） */
   content: {
-    type: [String, Function] as PropType<string | Function>,
+    type: [String, Function, Array, Object] as PropType<string | Function | any[] | Record<string, unknown>>,
+    validator: (val: unknown): boolean =>
+      val == null ||
+      typeof val === 'string' ||
+      typeof val === 'function' ||
+      Array.isArray(val) ||
+      (typeof val === 'object' && val !== null),
   },
   /** 位置 */
   placement: {

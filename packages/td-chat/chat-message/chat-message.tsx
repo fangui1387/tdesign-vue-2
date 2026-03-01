@@ -1,7 +1,7 @@
 import { defineComponent, computed, provide, ComputedRef } from 'vue';
 import { useConfig, usePrefixClass, useTNodeJSX } from '../utils/hooks';
 import props from './chat-message-props';
-import { isString, isObject } from 'lodash-es';
+import { isString, isObject, isArray } from 'lodash-es';
 import { Skeleton } from 'tdesign-vue';
 import Text from '../chat-content/chat-content';
 import { CheckCircleIcon } from 'tdesign-icons-vue';
@@ -22,6 +22,8 @@ export default defineComponent({
     provide('role', role);
 
     const renderContent = () => {
+      const compName = COMPONENT_NAME?.value ?? 't-chat';
+      const config = globalConfig?.value ?? {};
       const roleValue = props.role;
       const name = renderTNodeJSX('name', { slotFirst: true }) || props.name;
       const datetime = renderTNodeJSX('datetime', { slotFirst: true }) || props.datetime;
@@ -32,23 +34,23 @@ export default defineComponent({
       const content = renderTNodeJSX('content', { slotFirst: true }) || props.content;
 
       const contentClasses = computed(() => {
-        return showNameDatetime.value
-          ? [`${COMPONENT_NAME.value}__content`]
-          : [`${COMPONENT_NAME.value}__content`, `${COMPONENT_NAME.value}__content--base`];
+        return showNameDatetime?.value
+          ? [`${compName}__content`]
+          : [`${compName}__content`, `${compName}__content--base`];
       });
 
       const avatarDom = avatar ? (
-        <div class={`${COMPONENT_NAME.value}__avatar`}>
-          <div class={`${COMPONENT_NAME.value}__avatar__box`}>
-            {isString(avatar) ? <img src={avatar} alt="" class={`${COMPONENT_NAME.value}__avatar-image`} /> : avatar}
+        <div class={`${compName}__avatar`}>
+          <div class={`${compName}__avatar__box`}>
+            {isString(avatar) ? <img src={avatar} alt="" class={`${compName}__avatar-image`} /> : avatar}
           </div>
         </div>
       ) : null;
 
-      const nameDatetimeDom = showNameDatetime.value && (
-        <div class={`${COMPONENT_NAME.value}__base`}>
-          {name && <span class={`${COMPONENT_NAME.value}__name`}>{name}</span>}
-          {datetime && <span class={`${COMPONENT_NAME.value}__time`}>{datetime}</span>}
+      const nameDatetimeDom = showNameDatetime?.value && (
+        <div class={`${compName}__base`}>
+          {name && <span class={`${compName}__name`}>{name}</span>}
+          {datetime && <span class={`${compName}__time`}>{datetime}</span>}
         </div>
       );
 
@@ -56,7 +58,7 @@ export default defineComponent({
       const showActions = computed(() => slots.actionbar || slots.actions || slots.default);
 
       const renderHeader = () => {
-        const { loadingText, loadingEndText } = globalConfig.value;
+        const { loadingText, loadingEndText } = config;
         return (
           <div style="display:flex;align-items:center">
             <CheckCircleIcon
@@ -80,12 +82,30 @@ export default defineComponent({
           return <Text content={content} role={roleValue} status={props.status} {...props.chatContentProps} />;
         }
 
+        // 与 pro-components 一致：content 为分段数组时，仅渲染 text/markdown 段，其余由 slot 或上层处理
+        if (isArray(content) && content.length > 0) {
+          return content.map((segment: any, idx: number) => {
+            if (segment?.type === 'text' || segment?.type === 'markdown') {
+              return (
+                <Text
+                  key={segment.data?.id ?? idx}
+                  content={segment}
+                  role={roleValue}
+                  status={props.status}
+                  {...props.chatContentProps}
+                />
+              );
+            }
+            return null;
+          });
+        }
+
         return content;
       };
 
       const contentDom = [
         roleValue !== 'model-change' && avatarDom,
-        <div class={contentClasses.value}>
+        <div class={contentClasses?.value ?? []}>
           {roleValue !== 'model-change' && nameDatetimeDom}
           {textLoading &&
             (props.animation === 'skeleton' ? (
@@ -94,7 +114,7 @@ export default defineComponent({
               <ChatLoading animation={props.animation}></ChatLoading>
             ))}
           {!textLoading && (
-            <div class={`${COMPONENT_NAME.value}__detail`}>
+            <div class={`${compName}__detail`}>
               {isObject(props.reasoning) && roleValue === 'assistant' && (
                 <ChatReasoning
                   expandIconPlacement={(props.reasoning as Record<string, any>).expandIconPlacement}
@@ -121,17 +141,18 @@ export default defineComponent({
               {renderContentDom()}
             </div>
           )}
-          {roleValue === 'assistant' && showActions.value && (
-            <div class={`${COMPONENT_NAME.value}__actions-margin`}>
+          {roleValue === 'assistant' && showActions?.value && (
+            <div class={`${compName}__actions-margin`}>
               {slots.actionbar?.() || slots.actions?.() || slots.default?.()}
             </div>
           )}
         </div>,
       ];
 
+      const variantVal = variant?.value ?? 'base';
       return (
         <div
-          class={`${COMPONENT_NAME.value}__inner ${roleValue} ${COMPONENT_NAME.value}__text--variant--${variant.value}`}
+          class={`${compName}__inner ${roleValue} ${compName}__text--variant--${variantVal}`}
         >
           {contentDom}
         </div>

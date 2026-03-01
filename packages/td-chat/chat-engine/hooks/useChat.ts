@@ -13,9 +13,15 @@ export const useChat = (options: {
   const msgSubscribeRef = ref<(() => void) | null>(null);
   const prevInitialMessages = ref<ChatMessagesData[]>([]);
 
+  const toPlainMessages = (state: ChatMessagesData[] | undefined): ChatMessagesData[] => {
+    if (!state || !state.length) return [];
+    return JSON.parse(JSON.stringify(state));
+  };
+
   const syncState = (state: ChatMessagesData[]) => {
-    messages.value = state;
-    status.value = state[state.length - 1]?.status || 'idle';
+    // Vue 2: 避免把 MessageStore/Immer 产生的代理或 Vue3 响应式对象直接赋给 ref，否则会触发 observeArray 等错误
+    messages.value = toPlainMessages(state);
+    status.value = messages.value[messages.value.length - 1]?.status || 'idle';
   };
 
   const subscribeToChat = () => {
@@ -28,8 +34,10 @@ export const useChat = (options: {
 
   const initChat = () => {
     chatEngineRef.value = new ChatEngine();
-    chatEngineRef.value.init(options.chatServiceConfig, options.defaultMessages);
-    syncState(options.defaultMessages || []);
+    // Vue 2: 只传普通对象给引擎，避免引擎内部持有响应式引用导致 Immer setState 时 observeArray 报错
+    const plainDefault = toPlainMessages(options.defaultMessages || []);
+    chatEngineRef.value.init(options.chatServiceConfig, plainDefault);
+    syncState(plainDefault);
     subscribeToChat();
   };
 
@@ -50,10 +58,10 @@ export const useChat = (options: {
 
       if (hasChanged && newMessages && newMessages.length > 0) {
         prevInitialMessages.value = newMessages;
-
+        const plainNew = toPlainMessages(newMessages);
         if (chatEngineRef.value) {
-          chatEngineRef.value.setMessages(newMessages, 'replace');
-          syncState(newMessages);
+          chatEngineRef.value.setMessages(plainNew, 'replace');
+          syncState(plainNew);
         }
       }
     },

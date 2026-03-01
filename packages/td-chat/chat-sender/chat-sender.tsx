@@ -1,8 +1,8 @@
-import { defineComponent, ref, computed, toRefs, reactive } from 'vue';
+import { defineComponent, ref, computed, toRefs } from 'vue';
 import { SendFilledIcon, FileAttachmentIcon, ImageIcon } from 'tdesign-icons-vue';
 import { Button, Textarea, Tooltip } from 'tdesign-vue';
 import Attachments from '../attachments';
-import { useConfig, usePrefixClass, useTNodeJSX, useVModel } from '../utils/hooks';
+import { useConfig, usePrefixClass, useTNodeJSX, useVModelDual } from '../utils/hooks';
 import props from './chat-sender-props';
 
 import type { TdChatSenderProps, UploadActionType, UploadActionConfig } from '../type';
@@ -16,14 +16,22 @@ export default defineComponent({
       default: () => ({ items: [], overflow: 'scrollX' }),
     },
   },
-  emits: ['send', 'stop', 'blur', 'focus', 'fileSelect', 'remove', 'fileClick'],
+  emits: ['send', 'stop', 'update:modelValue', 'blur', 'focus', 'fileSelect', 'remove', 'fileClick'],
   setup(props, { emit }) {
     const isComposition = false;
     const senderTextarea = ref(null);
     const COMPONENT_NAME = usePrefixClass('chat');
     const { globalConfig } = useConfig('chat');
-    const { value } = toRefs(props);
-    const [textValue, setInnerValue] = useVModel(value, props.defaultValue, props.onChange);
+    const { value, modelValue } = toRefs(props);
+    const [textValue, setInnerValue] = useVModelDual(
+      value,
+      modelValue,
+      props.defaultValue,
+      props.onChange,
+      'value',
+      props,
+      emit,
+    );
 
     const focusFlag = ref(false);
     const showStopBtn = computed(() => props.loading || props.stopDisabled);
@@ -74,7 +82,8 @@ export default defineComponent({
       setInnerValue(value, context);
     };
 
-    const actionsDefault = reactive<UploadActionConfig[]>([
+    // Vue 2: 不要用 reactive([]) 作为根，否则 watch/watchEffect 无法追踪，改用 ref
+    const actionsDefault = ref<UploadActionConfig[]>([
       {
         name: 'uploadImage',
         uploadProps: {
@@ -93,12 +102,14 @@ export default defineComponent({
       },
     ]);
 
-    const getDefaultSuffixIcon = (actions = actionsDefault) => {
+    const getDefaultSuffixIcon = (actions = actionsDefault.value) => {
       const getDefaultAction = (name: UploadActionType) => {
-        const defaultAction = actionsDefault.find((item) => item.name === name)?.action;
+        const defaultAction = actionsDefault.value.find((item) => item.name === name)?.action;
         return defaultAction || (({ files, name, e }) => emit('fileSelect', { files, name, e }));
       };
-      const { uploadAttachmentText, uploadImageText } = globalConfig.value;
+      const config = globalConfig?.value ?? {};
+      const { uploadAttachmentText, uploadImageText } = config;
+      const compNameUpload = COMPONENT_NAME?.value ?? 't-chat';
       const uploadAttachment = actions.find((item) => item.name === 'uploadAttachment');
       const uploadAttachmentButton = uploadAttachment ? (
         <div>
@@ -123,7 +134,7 @@ export default defineComponent({
               onClick={() => uploadFileRef.value?.click()}
               shape="circle"
               variant="text"
-              class={[`${COMPONENT_NAME.value}-sender__upload`]}
+              class={[`${compNameUpload}-sender__upload`]}
             >
               <FileAttachmentIcon size="20px" />
             </Button>
@@ -155,7 +166,7 @@ export default defineComponent({
               onClick={() => uploadImageRef.value?.click()}
               shape="circle"
               variant="text"
-              class={[`${COMPONENT_NAME.value}-sender__upload`]}
+              class={[`${compNameUpload}-sender__upload`]}
             >
               <ImageIcon size="20px" />
             </Button>
@@ -167,6 +178,11 @@ export default defineComponent({
         uploadImage: renderUploadImageButton,
       };
 
+      const compName = COMPONENT_NAME?.value ?? 't-chat';
+      const showStop = showStopBtn?.value ?? false;
+      const txtVal = textValue?.value;
+      const dis = disabled?.value ?? false;
+
       return (
         <div>
           {actions.length > 0 &&
@@ -176,23 +192,23 @@ export default defineComponent({
                   item.name === 'uploadAttachment' || item.name === 'uploadImage',
               )
               .map((item) => buttonComponents[item.name])}
-          {!showStopBtn.value ? (
+          {!showStop ? (
             <Button
               theme="default"
               size="small"
               variant="text"
               class={[
-                `${COMPONENT_NAME.value}-sender__button__default`,
-                textValue.value ? '' : `${COMPONENT_NAME.value}-sender__button--disabled`,
+                `${compName}-sender__button__default`,
+                txtVal ? '' : `${compName}-sender__button--disabled`,
               ]}
               onClick={sendClick}
-              disabled={disabled.value || showStopBtn.value || !textValue.value}
+              disabled={dis || showStop || !txtVal}
             >
               <SendFilledIcon />
             </Button>
           ) : (
-            <Button variant="text" class={`${COMPONENT_NAME.value}-sender__button__default`} onClick={handleStop}>
-              <div class={`${COMPONENT_NAME.value}-sender__button__stopicon`} />
+            <Button variant="text" class={`${compName}-sender__button__default`} onClick={handleStop}>
+              <div class={`${compName}-sender__button__stopicon`} />
             </Button>
           )}
         </div>
@@ -213,12 +229,13 @@ export default defineComponent({
     };
 
     const renderHeader = () => {
+      const compName = COMPONENT_NAME?.value ?? 't-chat';
       return props.attachmentsProps.items.length > 0 ? (
         <Attachments
           items={props.attachmentsProps.items}
           onRemove={handleRemove}
           onFileClick={handleFileClick}
-          class={`${COMPONENT_NAME.value}-sender__attachment`}
+          class={`${compName}-sender__attachment`}
           overflow={props.attachmentsProps.overflow}
         />
       ) : (
@@ -228,45 +245,56 @@ export default defineComponent({
 
     const renderInputPrefix = () => renderTNodeJSX('input-prefix') || null;
 
-    const renderContent = () => (
-      <div class={`${COMPONENT_NAME.value}-sender`}>
-        <div
-          class={[
-            `${COMPONENT_NAME.value}-sender__textarea`,
-            focusFlag.value ? `${COMPONENT_NAME.value}-sender__textarea--focus` : '',
-          ]}
-        >
-          <div class={`${COMPONENT_NAME.value}-sender__header`}>{renderHeader()}</div>
-          <div class={`${COMPONENT_NAME.value}-sender__inner-header`}>{renderTNodeJSX('inner-header')}</div>
-          <div class={`${COMPONENT_NAME.value}-sender__textarea__wrapper`}>
-            {renderInputPrefix()}
-            <Textarea
-              ref={senderTextarea}
-              value={textValue.value}
-              onChange={textChange}
-              disabled={disabled.value}
-              autosize={
-                (props.textareaProps as TdChatSenderProps['textareaProps'])?.autosize || {
-                  minRows: 2,
-                  maxRows: 5,
+    const renderContent = () => {
+      const compName = COMPONENT_NAME?.value ?? 't-chat';
+      const txtVal = textValue?.value ?? '';
+      const dis = disabled?.value ?? false;
+      const focus = focusFlag?.value ?? false;
+      return (
+        <div class={`${compName}-sender`}>
+          <div
+            class={[
+              `${compName}-sender__textarea`,
+              focus ? `${compName}-sender__textarea--focus` : '',
+            ]}
+          >
+            <div class={`${compName}-sender__header`}>{renderHeader()}</div>
+            <div class={`${compName}-sender__inner-header`}>{renderTNodeJSX('inner-header')}</div>
+            <div class={`${compName}-sender__textarea__wrapper`}>
+              {renderInputPrefix()}
+              <Textarea
+                ref={senderTextarea}
+                value={txtVal}
+                onChange={textChange}
+                disabled={dis}
+                autosize={
+                  (props.textareaProps as TdChatSenderProps['textareaProps'])?.autosize || {
+                    minRows: 2,
+                    maxRows: 5,
+                  }
                 }
-              }
-              {...(props.textareaProps as TdChatSenderProps['textareaProps'])}
-              onKeydown={keydownFn}
-              onFocus={focusFn}
-              onBlur={blurFn}
-            />
-          </div>
-          <div class={`${COMPONENT_NAME.value}-sender__footer`}>
-            <div class={`${COMPONENT_NAME.value}-sender__mode`}>{renderTNodeJSX('footer-prefix')}</div>
-            <div class={`${COMPONENT_NAME.value}-sender__button`}>
-              <div class={`${COMPONENT_NAME.value}-sender__button__sendbtn`}>{renderSuffixIcon()}</div>
+                {...(props.textareaProps as TdChatSenderProps['textareaProps'])}
+                onKeydown={keydownFn}
+                onFocus={focusFn}
+                onBlur={blurFn}
+              />
+            </div>
+            <div class={`${compName}-sender__footer`}>
+              <div class={`${compName}-sender__mode`}>{renderTNodeJSX('footer-prefix')}</div>
+              <div class={`${compName}-sender__button`}>
+                <div class={`${compName}-sender__button__sendbtn`}>{renderSuffixIcon()}</div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    );
+      );
+    };
 
-    return renderContent;
+    return {
+      renderContent,
+    };
+  },
+  render() {
+    return (this as any).renderContent();
   },
 });

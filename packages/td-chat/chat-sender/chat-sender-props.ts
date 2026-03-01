@@ -42,6 +42,11 @@ export default {
     type: [String, Number] as PropType<TdChatSenderProps['value']>,
     default: undefined as TdChatSenderProps['value'],
   },
+  /** 输入框的值（v-model） */
+  modelValue: {
+    type: [String, Number] as PropType<TdChatSenderProps['modelValue']>,
+    default: undefined as TdChatSenderProps['modelValue'],
+  },
   /** 输入框的值，非受控属性 */
   defaultValue: {
     type: [String, Number] as PropType<TdChatSenderProps['defaultValue']>,

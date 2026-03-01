@@ -99,7 +99,7 @@ export default defineComponent({
       return null;
     };
 
-    return () => (
+    const renderMain = () => (
       <div class={`${COMPONENT_NAME.value}__think ${layoutClass.value}`}>
         <Collapse
           borderless={true}
@@ -120,5 +120,12 @@ export default defineComponent({
         </Collapse>
       </div>
     );
+
+    return {
+      renderMain,
+    };
+  },
+  render() {
+    return (this as any).renderMain();
   },
 });

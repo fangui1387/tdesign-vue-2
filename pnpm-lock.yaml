@@ -1089,8 +1089,8 @@ importers:
   packages/vue2-demo:
     dependencies:
       '@jump-mp/td-chat':
-        specifier: ^0.1.20
-        version: 0.1.20(tdesign-vue@1.10.0-naruto(vue@2.7.16))(vue@2.7.16)
+        specifier: workspace:*
+        version: link:../td-chat
       clipboard:
         specifier: ^2.0.11
         version: 2.0.11
@@ -2137,12 +2137,6 @@ packages:
 
   '@jridgewell/trace-mapping@0.3.9':
     resolution: {integrity: sha512-3Belt6tdc8bPgAtbcmdtNJlirVoTmEb5e2gC94PnkwEW9jI6CAHUeoG85tjWP5WquqfavoMtMwiG4P926ZKKuQ==}
-
-  '@jump-mp/td-chat@0.1.20':
-    resolution: {integrity: sha512-tsqjGLtyl18M/EbS0v3DA59sI7oEhozCDla74akSkfAVccib4aPJwVREG0CXYBSBAWu5LxRVHYk6ojbqk0Y2+Q==}
-    peerDependencies:
-      tdesign-vue: 1.10.0-naruto
-      vue: ^2.7.16
 
   '@material/material-color-utilities@0.1.2':
     resolution: {integrity: sha512-uKkkx7Xo1AZJR0eMjH902rAb0vEjDbb3tgXt0cC3SHbpDGkPNhkuDKtxnw147axOM6uKuI7vywHRQlDrjDGhCA==}
@@ -9976,24 +9970,6 @@ snapshots:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
-
-  '@jump-mp/td-chat@0.1.20(tdesign-vue@1.10.0-naruto(vue@2.7.16))(vue@2.7.16)':
-    dependencies:
-      '@tdesign/shared-utils': link:packages/shared/utils
-      clipboard: 2.0.11
-      highlight.js: 11.11.1
-      lodash-es: 4.17.21
-      marked: 12.0.2
-      marked-highlight: 2.2.1(marked@12.0.2)
-      tdesign-icons-vue: 0.3.6(vue@2.7.16)
-      tdesign-vue: 1.10.0-naruto(vue@2.7.16)
-      tdesign-web-components: 1.3.0-alpha.2
-      vue: 2.7.16
-    transitivePeerDependencies:
-      - bufferutil
-      - canvas
-      - supports-color
-      - utf-8-validate
 
   '@material/material-color-utilities@0.1.2': {}
 

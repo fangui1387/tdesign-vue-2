@@ -49,9 +49,8 @@
       @stop="stopHandler"
     >
       <template #suffix="{ renderPresets }">
-        <!-- 在这里可以进行自由的组合使用，或者新增预设 -->
-        <!-- 不需要附件操作的使用方式 -->
-        <component :is="renderPresets([])" />
+        <!-- Vue 2: 不能用 <component :is="renderPresets([])" />，:is 需要组件选项而非 VNode，用 RenderHelper 渲染返回的 VNode -->
+        <render-helper :render-fn="() => renderPresets([])" />
       </template>
     </t-chat-sender>
   </div>
@@ -73,11 +72,13 @@ import {
 } from '@jump-mp/td-chat';
 import { MessagePlugin } from 'tdesign-vue';
 import CustomToolCallRenderer from './components/Toolcall.vue';
+import RenderHelper from './components/RenderHelper';
 
 export default defineComponent({
   name: 'Demo',
   components: {
     CustomToolCallRenderer,
+    RenderHelper,
   },
   setup() {
     const listRef = ref<TdChatListApi | null>(null);

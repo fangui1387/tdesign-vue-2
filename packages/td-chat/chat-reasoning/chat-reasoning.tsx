@@ -1,24 +1,27 @@
 import { defineComponent, computed, provide, inject, ComputedRef, toRefs } from 'vue';
-import { usePrefixClass, useTNodeJSX, useVModel } from '../utils/hooks';
+import { usePrefixClass, useTNodeJSX, useVModelDual } from '../utils/hooks';
 import props from './chat-reasoning-props';
 import { Collapse, CollapsePanel } from 'tdesign-vue';
 
 export default defineComponent({
   name: 'TChatReasoning',
   props,
-  emits: ['change'],
-  setup(props) {
+  emits: ['change', 'update:collapsed'],
+  setup(props, { emit }) {
     const COMPONENT_NAME = usePrefixClass('chat');
     const injectedRole = inject<ComputedRef<string>>('role');
     const role = computed(() => injectedRole?.value || '');
     provide('role', role);
     const renderTNodeJSX = useTNodeJSX();
-    const { collapsed } = toRefs(props);
-    const [innerCollapsed, setInnerCollapsed] = useVModel(
+    const { collapsed, modelValue } = toRefs(props);
+    const [innerCollapsed, setInnerCollapsed] = useVModelDual(
       collapsed,
+      modelValue,
       props.defaultCollapsed,
       props.onExpandChange,
       'collapsed',
+      props,
+      emit,
     );
     const layoutClass = computed(() =>
       props.layout === 'border' ? `${COMPONENT_NAME.value}__detail-reasoning-border` : '',
@@ -40,10 +43,10 @@ export default defineComponent({
           <CollapsePanel
             expandIcon={true}
             value={0}
+            destroyOnCollapse={props?.collapsePanelProps?.destroyOnCollapse}
+            disabled={props?.collapsePanelProps?.disabled}
             {...{
               scopedSlots: {
-                destroyOnCollapse: () => props?.collapsePanelProps?.destroyOnCollapse,
-                disabled: () => props?.collapsePanelProps?.disabled,
                 default: () => props?.collapsePanelProps?.content || renderTNodeJSX('default'),
                 header: () => props?.collapsePanelProps?.header || renderTNodeJSX('header'),
                 expandIcon: () => props?.collapsePanelProps?.expandIcon || renderTNodeJSX('expandIcon'),
@@ -57,6 +60,11 @@ export default defineComponent({
       </div>
     );
 
-    return renderContent;
+    return {
+      renderContent,
+    };
+  },
+  render() {
+    return (this as any).renderContent();
   },
 });
