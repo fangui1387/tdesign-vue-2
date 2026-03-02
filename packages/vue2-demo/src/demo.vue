@@ -1,21 +1,21 @@
 <template>
   <div style="margin-top: -18px; height: 408px; display: flex; flex-direction: column">
-    <t-chat-list ref="listRef" :clear-history="false">
-      <t-chat-message
-        v-for="(message, idx) in messages"
-        :key="message.id"
-        v-bind="messageProps[message.role]"
-        :role="message.role"
-        :content="message.content"
-        allow-content-segment-custom
-      >
-        <!-- Vue 2: 不能在 template 上使用 key，使用 div 包裹 -->
-        <div v-for="(item, index) in message.content" :key="index">
-          <div v-if="item.type === 'reasoning'">
+    <!-- 与 pro-components 一致：用 :data 驱动列表，确保 messages 更新时列表重渲染 -->
+    <t-chat-list
+      ref="listRef"
+      :data="messages"
+      :message-props="messageProps"
+      :clear-history="false"
+      :text-loading="senderLoading"
+      :animation="messageProps.assistant?.animation || 'skeleton'"
+    >
+      <template #content="{ item, index }">
+        <!-- reasoning 段：自定义渲染（仅当 content 为 AGUI 分段数组时） -->
+        <template v-for="(contentItem, contentIndex) in (Array.isArray(item.content) ? item.content : [])">
+          <div v-if="contentItem.type === 'reasoning'" :key="`reasoning-${contentIndex}`" class="toolcall-wrapper">
             <div
-              v-for="(subItem, subIndex) in item.data"
-              :key="`toolcall-${index}-${subIndex}`"
-              :slot="`reasoning-toolcall-${subIndex}`"
+              v-for="(subItem, subIndex) in (contentItem.data || [])"
+              :key="`toolcall-${contentIndex}-${subIndex}`"
               class="toolcall-wrapper"
             >
               <CustomToolCallRenderer
@@ -25,18 +25,18 @@
               />
             </div>
           </div>
-        </div>
-
-        <template #actionbar>
-          <t-chat-actionbar
-            v-if="isAIMessage(message) && message.status === 'complete'"
-            :action-bar="getChatActionBar(idx === messages.length - 1)"
-            :content="getMessageContentForCopy(message)"
-            :comment="message.comment || ''"
-            @actions="(name) => actionHandler(name, { message, idx })"
-          />
+          <!-- text / markdown 段由 t-chat-message 内部渲染 -->
         </template>
-      </t-chat-message>
+      </template>
+      <template #actionbar="{ item, index }">
+        <t-chat-actionbar
+          v-if="isAIMessage(item) && item.status === 'complete'"
+          :action-bar="getChatActionBar(index === messages.length - 1)"
+          :content="getMessageContentForCopy(item)"
+          :comment="item.comment || ''"
+          @actions="(name) => actionHandler(name, { message: item, idx: index })"
+        />
+      </template>
     </t-chat-list>
 
     <t-chat-sender

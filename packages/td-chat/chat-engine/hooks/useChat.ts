@@ -28,7 +28,9 @@ export const useChat = (options: {
     if (!chatEngineRef.value) return;
 
     msgSubscribeRef.value = chatEngineRef.value.messageStore.subscribe((state: any) => {
-      syncState(state.messages);
+      // 兼容 state 为 { messages } 或直接为 messages 数组（与 pro-components / AGUI 引擎一致）
+      const list = Array.isArray(state) ? state : state?.messages;
+      syncState(list ?? []);
     });
   };
 

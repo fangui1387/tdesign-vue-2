@@ -74,7 +74,25 @@ export default defineComponent({
       };
 
       const renderContentDom = () => {
-        if (props.allowContentSegmentCustom && contentSlot) {
+        // 与 pro-components 一致：有 content slot 且 content 为数组时，slot 负责 reasoning 等，同时渲染 text/markdown 段
+        if (contentSlot && isArray(content) && content.length > 0) {
+          const textMarkdownNodes = content.map((segment: any, idx: number) => {
+            if (segment?.type === 'text' || segment?.type === 'markdown') {
+              return (
+                <Text
+                  key={segment.data?.id ?? idx}
+                  content={segment}
+                  role={roleValue}
+                  status={props.status}
+                  {...props.chatContentProps}
+                />
+              );
+            }
+            return null;
+          });
+          return [contentSlot, ...textMarkdownNodes];
+        }
+        if ((props.allowContentSegmentCustom && contentSlot) || (contentSlot && !isArray(content))) {
           return contentSlot;
         }
 
@@ -82,7 +100,7 @@ export default defineComponent({
           return <Text content={content} role={roleValue} status={props.status} {...props.chatContentProps} />;
         }
 
-        // 与 pro-components 一致：content 为分段数组时，仅渲染 text/markdown 段，其余由 slot 或上层处理
+        // content 为分段数组时，仅渲染 text/markdown 段，其余由 slot 或上层处理
         if (isArray(content) && content.length > 0) {
           return content.map((segment: any, idx: number) => {
             if (segment?.type === 'text' || segment?.type === 'markdown') {

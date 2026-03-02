@@ -57,6 +57,10 @@ export default {
   data: {
     type: Array as PropType<TdChatProps['data']>,
   },
+  /** 按角色配置每条消息的 props（如 variant、placement、chatContentProps），与 pro-components 一致 */
+  messageProps: {
+    type: Object as PropType<Record<string, any>>,
+  },
   /** 自定义每个对话单元的时间 */
   datetime: {
     type: Function as PropType<TdChatProps['datetime']>,

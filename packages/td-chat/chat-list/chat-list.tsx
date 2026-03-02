@@ -75,20 +75,26 @@ export default defineComponent({
           }
           return 'left';
         };
-        return data.map((item: TdChatItemMeta, index: number) => (
+        return data.map((item: TdChatItemMeta, index: number) => {
+          const itemMessageProps = (props.messageProps && (props.messageProps as any)[item.role]) || {};
+          return (
           <ChatMessage
             avatar={item.avatar}
             name={item.name}
             role={item.role}
             status={
-              item.status || (props.textLoading && (props.reverse ? index === 0 : index === data.length - 1))
+              (item.status === 'pending' ||
+                item.status === 'streaming' ||
+                (props.textLoading && (props.reverse ? index === 0 : index === data.length - 1)))
                 ? 'pending'
-                : ''
+                : item.status || 'complete'
             }
             content={item.content}
             datetime={item.datetime}
-            animation={props.animation}
-            placement={setPlacement(item)}
+            animation={itemMessageProps.animation ?? props.animation}
+            placement={itemMessageProps.placement ?? setPlacement(item)}
+            variant={itemMessageProps.variant}
+            chatContentProps={itemMessageProps.chatContentProps}
             {...{
               scopedSlots: {
                 actionbar: () =>
@@ -106,7 +112,8 @@ export default defineComponent({
               },
             }}
           />
-        ));
+          );
+        });
       } else {
         return renderTNodeJSX('default');
       }
